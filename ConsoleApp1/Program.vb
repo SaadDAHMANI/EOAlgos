@@ -12,12 +12,12 @@ Module Program
         'initialize search space intevalls
         Dim intervalls As New List(Of Intervalle)
         For i = 0 To (d - 1)
-            intervalls.Add(New Intervalle(-12, 12))
+            intervalls.Add(New Intervalle(-120, 120))
         Next
 
         'initialize algo
         With gsaAlgo
-            .Agents_N = 70
+            .Agents_N = 50
             .Dimensions_D = d
             .MaxIterations =2000
             .Intervalles = intervalls

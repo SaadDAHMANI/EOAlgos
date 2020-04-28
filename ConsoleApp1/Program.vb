@@ -1,12 +1,13 @@
 Imports System
 Imports MonoObjectiveEOALib
 Module Program
+
     Sub Main(args As String())
         Dim gsaAlgo = New GSA_Optimizer()
         AddHandler gsaAlgo.ObjectiveFunction, AddressOf F1
 
         'initialisation of search sapce dimension
-        Dim d As Int32 = 5
+        Dim d As Int32 = 10
 
         'initialize search space intevalls
         Dim intervalls As New List(Of Intervalle)
@@ -18,7 +19,7 @@ Module Program
         With gsaAlgo
             .Agents_N = 20
             .Dimensions_D = d
-            .MaxIterations = 500
+            .MaxIterations =700
             .Intervalles = intervalls
             .OptimizationType = OptimizationTypeEnum.Minimization
             .LuanchComputation()

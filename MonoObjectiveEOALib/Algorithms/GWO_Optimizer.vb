@@ -1,3 +1,4 @@
+Imports System.ComponentModel
 
 Public Class GWO_Optimizer
     Implements IEvolutionaryAlgo
@@ -189,6 +190,10 @@ Public Class GWO_Optimizer
     Dim worstFitness As Double = 0R
     Dim meanFitness As Double = 0R
     '----------------------------------------------------------------------------
+
+    ''' <summary>
+    ''' Obsolet. Change this to separte algorithms and to above from if check.
+    ''' </summary>
     Public Sub RunEpoch() Implements IEvolutionaryAlgo.RunEpoch
         If mOptimizationType = OptimizationTypeEnum.Minimization Then
             RunEpoch_Minimization()
@@ -202,9 +207,6 @@ Public Class GWO_Optimizer
             If iteration = 0 Then
                 Initialize()
             End If
-
-
-
             '---------------------------------
             worstFitness = Double.MinValue
             meanFitness = 0R

@@ -4,7 +4,7 @@ Module Program
 
     Sub Main(args As String())
         Dim gsaAlgo = New GSA_Optimizer()
-        AddHandler gsaAlgo.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
+        AddHandler gsaAlgo.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F0
 
         'initialisation of search sapce dimension
         Dim d As Int32 = 10
@@ -12,7 +12,7 @@ Module Program
         'initialize search space intevalls
         Dim intervalls As New List(Of Intervalle)
         For i = 0 To (d - 1)
-            intervalls.Add(New Intervalle(-120, 120))
+            intervalls.Add(New Intervalle(-10, 10))
         Next
 
         'initialize algo

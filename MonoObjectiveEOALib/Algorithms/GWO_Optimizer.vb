@@ -79,6 +79,22 @@ Public Class GWO_Optimizer
         End Get
     End Property
 
+Public ReadOnly Property BestScore As Double Implements IEvolutionaryAlgo.BestScore
+        Get
+            If (Equals(BestChart, Nothing) OrElse (BestChart.Count = 0)) Then
+                If OptimizationType = OptimizationTypeEnum.Minimization Then
+                    Return Double.MaxValue
+                Else
+                    Return Double.MinValue
+                End If
+            Else
+                Return BestChart.Last()
+            End If
+        End Get
+    End Property
+
+
+
     Dim mBestChart As List(Of Double)
     Public ReadOnly Property BestChart As List(Of Double) Implements IEvolutionaryAlgo.BestChart
         Get
@@ -107,7 +123,7 @@ Public Class GWO_Optimizer
         End Get
     End Property
 
-    Public Event ObjectiveFunctionComputation(ByRef positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunctionComputation
+    Public Event ObjectiveFunctionComputation(positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunctionComputation
 
     Dim mCurrentFitness As Double = Double.NaN
     Public ReadOnly Property CurrentBestFitness As Double Implements IEvolutionaryAlgo.CurrentBestFitness
@@ -144,8 +160,8 @@ Public Class GWO_Optimizer
     'Dim objectiveFunctValues(wolfCountN - 1) As Double
     Dim objectiveFunctValues() As Double
 
-    '*L'initialisation du loup gris qui a utilisé autant que le nombre de paramètres du Loup
-    'Console.WriteLine("l'initialisation des Loup gris sur de la position aléatoire")
+    '*L'initialisation du loup gris qui a utilisï¿½ autant que le nombre de paramï¿½tres du Loup
+    'Console.WriteLine("l'initialisation des Loup gris sur de la position alï¿½atoire")
 
     'indeksPosisiTerbaik : le meilleur indice de position
     Dim bestPositionIndex As Integer = -1
@@ -162,7 +178,7 @@ Public Class GWO_Optimizer
     Dim Positions_Delta() As Double
     Dim value_Delta As Double = Double.MaxValue 'la valeur de loup Delta.
 
-    '2. le processus de calcul autant que le nombre d'itérations (point 2a - 2c)»
+    '2. le processus de calcul autant que le nombre d'itï¿½rations (point 2a - 2c)ï¿½
     Dim iteration As Integer = 0
 
     '---------------------------------- Variables -------------------------------
@@ -212,13 +228,13 @@ Public Class GWO_Optimizer
             meanFitness = 0R
             '---------------------------------
 
-            '2a. a fait le calcul sur chaque loup gris (points 2a1 - 2a6))»
+            '2a. a fait le calcul sur chaque loup gris (points 2a1 - 2a6))ï¿½
             For i As Integer = 0 To (positionsList.Length - 1)
 
                 '2a1. Faire le calcul sur les positions respectives du loup gris
-                'Si une position sur le calcul précédent s'est avérée être en dehors
-                ' des limites de la position qui sont autorisés,
-                ' puis la valeur de retour afin de s'adapter à la limite
+                'Si une position sur le calcul prï¿½cï¿½dent s'est avï¿½rï¿½e ï¿½tre en dehors
+                ' des limites de la position qui sont autorisï¿½s,
+                ' puis la valeur de retour afin de s'adapter ï¿½ la limite
                 For j As Integer = 0 To positionsList(i).Length - 1
                     If positionsList(i)(j) < Intervalles(j).Min_Value Then
                         'positionsList(i)(j) = (Intervalles(j).Max_Value - Intervalles(j).Min_Value) * Rndm.NextDouble() + Intervalles(j).Min_Value
@@ -231,7 +247,7 @@ Public Class GWO_Optimizer
                     End If
                 Next j
 
-                '2a2. Calculer la valeur de la fonction à cette position
+                '2a2. Calculer la valeur de la fonction ï¿½ cette position
                 'nilaiFungsiBaru : la valeur des nouvelles fonctions
                 'Dim newObjectiveFunctValue As Double = ObjectiveFunction(positionsList(i))
 
@@ -249,8 +265,8 @@ Public Class GWO_Optimizer
 
                 End If
 
-                '2a4. Si la valeur de la nouvelle fonction est inférieure à la valeur de l'alpha,
-                ' mais il est mieux que la valeur bêta, puis prendre cette position que la position 
+                '2a4. Si la valeur de la nouvelle fonction est infï¿½rieure ï¿½ la valeur de l'alpha,
+                ' mais il est mieux que la valeur bï¿½ta, puis prendre cette position que la position 
                 ' de la meilleure Beta.
                 If newObjectiveFunctValue > value_Alpha AndAlso newObjectiveFunctValue < value_Beta Then
 
@@ -260,7 +276,7 @@ Public Class GWO_Optimizer
 
                 End If
 
-                '2a5. Si la valeur de la nouvelle fonction est inférieure à la valeur de l'alpha et bêta, 
+                '2a5. Si la valeur de la nouvelle fonction est infï¿½rieure ï¿½ la valeur de l'alpha et bï¿½ta, 
                 ' mais mieux que la valeur Delta, puis prendre cette position comme la meilleure position 
                 ' Delta.
                 If newObjectiveFunctValue > value_Alpha AndAlso newObjectiveFunctValue > value_Beta AndAlso newObjectiveFunctValue < value_Delta Then
@@ -271,7 +287,7 @@ Public Class GWO_Optimizer
 
                 End If
 
-                'Si la valeur alpha alors qu'il s'avère mieux que les valeurs de fonction en général,
+                'Si la valeur alpha alors qu'il s'avï¿½re mieux que les valeurs de fonction en gï¿½nï¿½ral,
                 ' puis prendre la position alpha comme la meilleure position
                 If value_Alpha < bestObjectiveFunct Then
 
@@ -291,9 +307,9 @@ Public Class GWO_Optimizer
 
             Next i
 
-            '2b. Spécifiez la valeur d'un
+            '2b. Spï¿½cifiez la valeur d'un
             'Un a aura des valeurs initiales 2 et diminuera graduellement vers le 0 autant 
-            ' de fois que le nombre d'itérations
+            ' de fois que le nombre d'itï¿½rations
 
             If GWOVersion = GWOVersionEnum.StandardGWO Then
 
@@ -313,14 +329,14 @@ Public Class GWO_Optimizer
 
             End If
 
-            '2c. Faire le calcul à chaque position du loup gris qui existe (poin 2c1 - 2c4)
+            '2c. Faire le calcul ï¿½ chaque position du loup gris qui existe (poin 2c1 - 2c4)
             For i As Integer = 0 To (positionsList.Length - 1)
 
                 For j As Integer = 0 To (positionsList(i).Length - 1)
 
                     '2c1. Faire le calcul pour calculer la valeur de la X_Alpha (poin 2c1a - 2c1e)
 
-                    '2c1a. Spécifiez une valeur aléatoire de 2 à utiliser dans le calcul de
+                    '2c1a. Spï¿½cifiez une valeur alï¿½atoire de 2 ï¿½ utiliser dans le calcul de
 
                     r1 = Rndm.NextDouble()
                     r2 = Rndm.NextDouble()
@@ -342,7 +358,7 @@ Public Class GWO_Optimizer
                     'Dim X_Alpha As Double = Positions_Alpha(j) - A_Alpha * D_Alpha
                     X_Alpha = Positions_Alpha(j) - (A_Alpha * D_Alpha)
 
-                    '2c2. Faire le même calcul (2c1 points) pour calculer la valeur de X Beta
+                    '2c2. Faire le mï¿½me calcul (2c1 points) pour calculer la valeur de X Beta
                     r1 = Rndm.NextDouble()
                     r2 = Rndm.NextDouble()
 
@@ -351,7 +367,7 @@ Public Class GWO_Optimizer
                     D_Beta = Math.Abs(((C_Beta * Positions_Beta(j)) - positionsList(i)(j)))
                     X_Beta = Positions_Beta(j) - (A_Beta * D_Beta)
 
-                    '2c3. Faire le même calcul (point 2c1) pour calculer la valeur de Delta X
+                    '2c3. Faire le mï¿½me calcul (point 2c1) pour calculer la valeur de Delta X
                     r1 = Rndm.NextDouble()
                     r2 = Rndm.NextDouble()
 
@@ -398,10 +414,10 @@ Public Class GWO_Optimizer
             '    'daftarPosisi : Liste des positions
             '    positionsList(i) = New Double(dimensionD - 1) {}
 
-            '    '1 a. donner des positions aléatoires sur chacun des loups gris,
+            '    '1 a. donner des positions alï¿½atoires sur chacun des loups gris,
             '    ' autant que le nombre de dimensions
-            '    'Calculer ensuite la valeur de la fonction à cette position
-            '    'Description plus de détails sur cette fonction peut être vu
+            '    'Calculer ensuite la valeur de la fonction ï¿½ cette position
+            '    'Description plus de dï¿½tails sur cette fonction peut ï¿½tre vu
             '    ' dans l'explication du script ci-dessous.
 
             '    For j As Integer = 0 To (dimensionD - 1)
@@ -423,7 +439,7 @@ Public Class GWO_Optimizer
             '    'Console.WriteLine("la valeur de la fonction = " & objectiveFunctValues(i).ToString("F2"))
             '    REM------------------------------------------------------------------------------------------
 
-            '    '1 b. Si la valeur d'une position aléatoire est meilleure que la meilleure,
+            '    '1 b. Si la valeur d'une position alï¿½atoire est meilleure que la meilleure,
             '    ' la valeur de fonction 
             '    'alors, prenez cette position comme la meilleure position tout en
             '    If objectiveFunctValues(i) > bestObjectiveFunct Then
@@ -445,15 +461,15 @@ Public Class GWO_Optimizer
             REM------------------------------------------------------------------------------------------
 
             '* Effectuer le processus de recherche la meilleure position
-            'Console.WriteLine("Démarrez le processus de recherche la meilleure position")
+            'Console.WriteLine("Dï¿½marrez le processus de recherche la meilleure position")
 
-            '2a. a fait le calcul sur chaque loup gris (points 2a1 - 2a6))»
+            '2a. a fait le calcul sur chaque loup gris (points 2a1 - 2a6))ï¿½
             For i As Integer = 0 To (positionsList.Length - 1)
 
                 '2a1. Faire le calcul sur les positions respectives du loup gris
-                'Si une position sur le calcul précédent s'est avérée être en dehors
-                ' des limites de la position qui sont autorisés,
-                ' puis la valeur de retour afin de s'adapter à la limite
+                'Si une position sur le calcul prï¿½cï¿½dent s'est avï¿½rï¿½e ï¿½tre en dehors
+                ' des limites de la position qui sont autorisï¿½s,
+                ' puis la valeur de retour afin de s'adapter ï¿½ la limite
                 For j As Integer = 0 To positionsList(i).Length - 1
                     If positionsList(i)(j) < Intervalles(j).Min_Value Then
 
@@ -466,7 +482,7 @@ Public Class GWO_Optimizer
                     End If
                 Next j
 
-                '2a2. Calculer la valeur de la fonction à cette position
+                '2a2. Calculer la valeur de la fonction ï¿½ cette position
                 'nilaiFungsiBaru : la valeur des nouvelles fonctions
                 'Dim newObjectiveFunctValue As Double = ObjectiveFunction(positionsList(i))
 
@@ -483,8 +499,8 @@ Public Class GWO_Optimizer
 
                 End If
 
-                '2a4. Si la valeur de la nouvelle fonction est inférieure à la valeur de l'alpha,
-                ' mais il est mieux que la valeur bêta, puis prendre cette position que la position 
+                '2a4. Si la valeur de la nouvelle fonction est infï¿½rieure ï¿½ la valeur de l'alpha,
+                ' mais il est mieux que la valeur bï¿½ta, puis prendre cette position que la position 
                 ' de la meilleure Beta.
                 If newObjectiveFunctValue < value_Alpha AndAlso newObjectiveFunctValue > value_Beta Then
 
@@ -494,7 +510,7 @@ Public Class GWO_Optimizer
 
                 End If
 
-                '2a5. Si la valeur de la nouvelle fonction est inférieure à la valeur de l'alpha et bêta, 
+                '2a5. Si la valeur de la nouvelle fonction est infï¿½rieure ï¿½ la valeur de l'alpha et bï¿½ta, 
                 ' mais mieux que la valeur Delta, puis prendre cette position comme la meilleure position 
                 ' Delta.
                 If newObjectiveFunctValue < value_Alpha AndAlso newObjectiveFunctValue < value_Beta AndAlso newObjectiveFunctValue > value_Delta Then
@@ -505,7 +521,7 @@ Public Class GWO_Optimizer
 
                 End If
 
-                'Si la valeur alpha alors qu'il s'avère mieux que les valeurs de fonction en général,
+                'Si la valeur alpha alors qu'il s'avï¿½re mieux que les valeurs de fonction en gï¿½nï¿½ral,
                 ' puis prendre la position alpha comme la meilleure position
                 If value_Alpha > bestObjectiveFunct Then
 
@@ -528,9 +544,9 @@ Public Class GWO_Optimizer
 
             Next i
 
-            '2b. Spécifiez la valeur d'un
+            '2b. Spï¿½cifiez la valeur d'un
             'Un a aura des valeurs initiales 2 et diminuera graduellement vers le 0 autant 
-            ' de fois que le nombre d'itérations
+            ' de fois que le nombre d'itï¿½rations
 
             If GWOVersion = GWOVersionEnum.StandardGWO Then
 
@@ -548,13 +564,13 @@ Public Class GWO_Optimizer
 
             End If
 
-            '2c. Faire le calcul à chaque position du loup gris qui existe (poin 2c1 - 2c4)
+            '2c. Faire le calcul ï¿½ chaque position du loup gris qui existe (poin 2c1 - 2c4)
             For i As Integer = 0 To (positionsList.Length - 1)
                 For j As Integer = 0 To (positionsList(i).Length - 1)
 
                     '2c1. Faire le calcul pour calculer la valeur de la X_Alpha (poin 2c1a - 2c1e)
 
-                    '2c1a. Spécifiez une valeur aléatoire de 2 à utiliser dans le calcul de
+                    '2c1a. Spï¿½cifiez une valeur alï¿½atoire de 2 ï¿½ utiliser dans le calcul de
                     'Dim r1 As Double = rnd.NextDouble
                     'Dim r2 As Double = rnd.NextDouble
 
@@ -578,7 +594,7 @@ Public Class GWO_Optimizer
                     'Dim X_Alpha As Double = Positions_Alpha(j) - A_Alpha * D_Alpha
                     X_Alpha = Positions_Alpha(j) - (A_Alpha * D_Alpha)
 
-                    '2c2. Faire le même calcul (2c1 points) pour calculer la valeur de X Beta
+                    '2c2. Faire le mï¿½me calcul (2c1 points) pour calculer la valeur de X Beta
                     r1 = Rndm.NextDouble()
                     r2 = Rndm.NextDouble()
 
@@ -587,7 +603,7 @@ Public Class GWO_Optimizer
                     D_Beta = Math.Abs(((C_Beta * Positions_Beta(j)) - positionsList(i)(j)))
                     X_Beta = Positions_Beta(j) - (A_Beta * D_Beta)
 
-                    '2c3. Faire le même calcul (point 2c1) pour calculer la valeur de Delta X
+                    '2c3. Faire le mï¿½me calcul (point 2c1) pour calculer la valeur de Delta X
                     r1 = Rndm.NextDouble()
                     r2 = Rndm.NextDouble()
 
@@ -652,10 +668,10 @@ Public Class GWO_Optimizer
             'daftarPosisi : Liste des positions
             positionsList(i) = New Double((dimensionD - 1)) {}
 
-            '1 a. donner des positions aléatoires sur chacun des loups gris,
+            '1 a. donner des positions alï¿½atoires sur chacun des loups gris,
             ' autant que le nombre de dimensions
-            'Calculer ensuite la valeur de la fonction à cette position
-            'Description plus de détails sur cette fonction peut être vu
+            'Calculer ensuite la valeur de la fonction ï¿½ cette position
+            'Description plus de dï¿½tails sur cette fonction peut ï¿½tre vu
             ' dans l'explication du script ci-dessous.
 
             For j As Integer = 0 To (dimensionD - 1)
@@ -666,7 +682,7 @@ Public Class GWO_Optimizer
 
             '-------------------------------------------------------------------------------------
 
-            '1 b. Si la valeur d'une position aléatoire est meilleure que la meilleure,
+            '1 b. Si la valeur d'une position alï¿½atoire est meilleure que la meilleure,
             ' la valeur de fonction 
             'alors, prenez cette position comme la meilleure position tout en
             If objectiveFunctValues(i) < bestObjectiveFunct Then

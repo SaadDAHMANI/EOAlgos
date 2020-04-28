@@ -120,7 +120,7 @@ Public Class GSA_Optimizer
         End Get
     End Property
 
-    Public Event ObjectiveFunction(positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunction
+    Public Event ObjectiveFunctionComputation(positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunctionComputation
 
     Dim mCurrentFitness As Double = Double.NaN
     Public ReadOnly Property CurrentBestFitness As Double Implements IEvolutionaryAlgo.CurrentBestFitness
@@ -390,7 +390,7 @@ Public Class GSA_Optimizer
                 For j = 0 To D
                     Positions(j) = Me.X(i, j)
                 Next
-                RaiseEvent ObjectiveFunction(Positions, fitnessValue)
+                RaiseEvent ObjectiveFunctionComputation(Positions, fitnessValue)
                 fitnessArray(i) = fitnessValue
             Next
         Catch ex As Exception

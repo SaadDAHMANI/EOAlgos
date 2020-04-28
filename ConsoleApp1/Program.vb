@@ -4,7 +4,7 @@ Module Program
 
     Sub Main(args As String())
         Dim gsaAlgo = New GSA_Optimizer()
-        AddHandler gsaAlgo.ObjectiveFunction, AddressOf F1
+        AddHandler gsaAlgo.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
 
         'initialisation of search sapce dimension
         Dim d As Int32 = 10
@@ -12,14 +12,14 @@ Module Program
         'initialize search space intevalls
         Dim intervalls As New List(Of Intervalle)
         For i = 0 To (d - 1)
-            intervalls.Add(New Intervalle(-100, 100))
+            intervalls.Add(New Intervalle(-12, 12))
         Next
 
         'initialize algo
         With gsaAlgo
-            .Agents_N = 20
+            .Agents_N = 70
             .Dimensions_D = d
-            .MaxIterations =700
+            .MaxIterations =2000
             .Intervalles = intervalls
             .OptimizationType = OptimizationTypeEnum.Minimization
             .LuanchComputation()
@@ -34,20 +34,6 @@ Module Program
         'Write the best score
         Console.WriteLine(String.Format("The best score is : {0}", gsaAlgo.BestScore))
 
-
-    End Sub
-
-    ''' <summary>
-    ''' Exemple of objective function
-    ''' </summary>
-    ''' <param name="positions"></param>
-    ''' <param name="fitnessValue"></param>
-    Private Sub F1(positions() As Double, ByRef fitnessValue As Double)
-
-        fitnessValue = 0R
-        For i = 0 To (positions.Length - 1)
-            fitnessValue += positions(i) ^ 2 - 5
-        Next
-
+Console.WriteLine("End of computation.....")
     End Sub
 End Module

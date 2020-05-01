@@ -3,10 +3,25 @@ Imports System.ComponentModel
 Public Class GWO_Optimizer
     Implements IEvolutionaryAlgo
 
+    Public Sub new ()
+    End sub
     Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer)
         Dimensions_D = dimensions
         Agents_N = agents
         MaxIterations = iterationMax
+    End Sub
+
+    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer, gwoVersion As GWOVersionEnum, IGWOParm As Double)
+        Dimensions_D = dimensions
+        Agents_N = agents
+        MaxIterations = iterationMax
+        Me.GWOVersion = gwoVersion
+        Me.IGWO_uParameter = IGWOParm
+    End Sub
+
+    Public Sub New(gwoVersion As GWOVersionEnum, IGWOParm As Double)
+        Me.GWOVersion = gwoVersion
+        Me.IGWO_uParameter = IGWOParm
     End Sub
 
     Private Shared Rndm As New Random(0)
@@ -704,12 +719,10 @@ Public ReadOnly Property BestScore As Double Implements IEvolutionaryAlgo.BestSc
 #End Region
 
     Public Sub LuanchComputation() Implements IEvolutionaryAlgo.LuanchComputation
-        Throw New NotImplementedException
-        Return
-        'Initialize()
-        'While iteration < MaxIterations
-        '    RunEpoch()
-        'End While
+        Initialize()
+         For Iteration = 0 To MaxIterations
+                RunEpoch()
+            Next
     End Sub
 End Class
 

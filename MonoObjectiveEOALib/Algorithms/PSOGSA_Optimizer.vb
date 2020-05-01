@@ -5,24 +5,34 @@
 ''' Algorithm for Function Optimization, in IEEE International Conference 
 ''' on Computer and Information Application?ICCIA 2010), China, 2010, pp. 374-377.
 ''' </summary>
-Public Class PSOGSAOptimizer
+Public Class PSOGSA_Optimizer
         Implements IEvolutionaryAlgo
 
-        Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer)
+    Public Sub New()
+    End Sub
+    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer)
             Dimensions_D = dimensions
             Agents_N = agents
             MaxIterations = iterationMax
         End Sub
 
-        Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer, gO As Double, alpha_g As Double)
-            Dimensions_D = dimensions
-            Agents_N = agents
-            MaxIterations = iterationMax
-            G0 = gO
-            Me.Alpha = alpha_g
-        End Sub
+    Public Sub New(gO As Double, alpha_g As Double, c_1 As Double, c_2 As Double)
+        Me.G0 = gO
+        Me.Alpha = alpha_g
+        Me.C1 = c_1
+        Me.C2 = c_2
+    End Sub
+    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer, gO As Double, alpha_g As Double, c_1 As Double, c_2 As Double)
+        Dimensions_D = dimensions
+        Agents_N = agents
+        MaxIterations = iterationMax
+        Me.G0 = gO
+        Me.Alpha = alpha_g
+        Me.C1 = c_1
+        Me.C2 = c_2
+    End Sub
 
-        Private Sub Initialize()
+    Private Sub Initialize()
 
             For Each interval In Me.Intervalles
                 If interval.Max_Value < interval.Min_Value Then
@@ -430,8 +440,9 @@ Public ReadOnly Property BestScore As Double Implements IEvolutionaryAlgo.BestSc
         Private Force(,) As Double
         '---------------GSA params---------------
         Public Property Alpha As Double = 23.0R
-        Public Property G0 As Double = 1.0R
-        Private Const Eps As Double = 0.00000000000000022204
+    Public Property G0 As Double = 1.0R
+
+    Private Const Eps As Double = 0.00000000000000022204
         Private Acceleration As Double(,)
 
         '-------------PSO Variables ------------

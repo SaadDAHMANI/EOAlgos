@@ -18,6 +18,10 @@ Public Class GSA_Optimizer
         G0 = gO
         Me.Alpha = alpha_g
     End Sub
+    Public Sub New(gO As Double, alpha_g As Double)
+        G0 = gO
+        Me.Alpha = alpha_g
+    End Sub
 
     Private Shared Rand As Random = New Random()
 

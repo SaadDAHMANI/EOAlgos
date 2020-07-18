@@ -1,3 +1,6 @@
+Imports System
+
+'Namespace MonoObjectiveEOALib
 
 Public Class GSA_Optimizer
     Implements IEvolutionaryAlgo
@@ -730,3 +733,5 @@ Public Enum ElitistCheckEnum
     Equation9 = 0
     Equation21 = 1
 End Enum
+    
+'End Namespace

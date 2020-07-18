@@ -1,5 +1,6 @@
 Imports System
 Imports MonoObjectiveEOALib
+
 Module Program
 
 Private Optimizer as IEvolutionaryAlgo
@@ -37,7 +38,7 @@ Dim Intervalls As List(Of Intervalle)
     End Sub
 
 Private Sub TestGSA()
-        Optimizer = New GSA_Optimizer(100, 20)
+        Optimizer = New MonoObjectiveEOALib.GSA_Optimizer(100, 20)
         AddHandler Optimizer.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
         'initialize algo
 

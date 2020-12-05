@@ -13,12 +13,12 @@ Module Program
     Sub Main(args As String())
 
         'initialisation of search sapce dimension
-        D = 10
+        D = 5
 
         'initialisation of search agents count 
-        N = 20
+        N = 40
 
-        Kmax = 1200
+        Kmax = 1000
 
         'initialize search space intevalls
 

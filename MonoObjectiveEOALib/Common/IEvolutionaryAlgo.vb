@@ -4,7 +4,6 @@
     Sub RunEpoch()
     Sub LuanchComputation()
 
-
     Property Dimensions_D As Integer
     Property PopulationSize_N As Integer
 

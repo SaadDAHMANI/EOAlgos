@@ -13,3 +13,9 @@ Public Enum OptimizationSyncModeEnum
     Synchronous = 0
     Asynchronous = 1
 End Enum
+
+Public Enum SolutionsInitializationStrategyEnum
+    Random = 0
+    Grid = 1
+End Enum
+

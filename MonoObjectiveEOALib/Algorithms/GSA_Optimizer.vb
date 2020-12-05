@@ -525,9 +525,6 @@ Public Class GSA_Optimizer
 
 #End Region
 
-
-
-
 #End Region
 
 End Class

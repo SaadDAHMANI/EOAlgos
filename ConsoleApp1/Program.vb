@@ -3,115 +3,58 @@ Imports MonoObjectiveEOALib
 
 Module Program
 
-Private Optimizer as IEvolutionaryAlgo
+    Private Optimizer As EvolutionaryAlgoBase
 
-Dim D As Int32
-dim N as int32
-dim Kmax as int32
-Dim Intervalls As List(Of Interval)
+    Dim D As Int32
+    Dim N As Int32
+    Dim Kmax As Int32
+    Dim Intervals As List(Of Interval)
 
- Sub Main(args As String())
+    Sub Main(args As String())
 
         'initialisation of search sapce dimension
-        D = 10
+        D = 7
 
         'initialisation of search agents count 
-        N = 50
-
-        'initialisation of max iteration number 
+        N = 30
         Kmax = 1000
 
         'initialize search space intevalls
-        Intervalls = new List(of Interval)
-        For i = 0 To (d - 1)
-            intervalls.Add(New Interval(-10, 10))
-        Next
-           '-----------------------------------------------------------------
-         Console.WriteLine(" ")
-         TestGSA()
-         Console.WriteLine(" ")
-         TestPSOGSA()
-         Console.WriteLine(" ")
-         TestGWO()
 
+        Intervals = New List(Of Interval)
+
+        For i = 0 To (D - 1)
+            Intervals.Add(New Interval(1, 10))
+        Next
+
+        TestGSA(N, D, Intervals)
+
+        Console.WriteLine(" ")
 
     End Sub
 
-Private Sub TestGSA()
-        Optimizer = New MonoObjectiveEOALib.GSA_Optimizer(100, 20)
-        AddHandler Optimizer.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
+    Private Sub TestGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+        Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 10.5)
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+
         'initialize algo
 
-        With Optimizer 
-            .Agents_N = n
-            .Dimensions_D = d
-            .MaxIterations =kmax
-            .Intervalles = Intervalls
+        With Optimizer
+
             .OptimizationType = OptimizationTypeEnum.Minimization
 
             .LuanchComputation()
+
         End With
 
-        ''Write the best solution for GSA
-        'Console.WriteLine("The best solution with GSA is : ")
-        'For i = 0 To (d - 1)
-        '    Console.WriteLine(Optimizer .BestSolution(i))
-        'Next
+        Console.WriteLine("The best solution with GSA is : ")
+        For i = 0 To (D - 1)
+            Console.WriteLine(Optimizer.BestSolution(i))
+        Next
 
         'Write the best score for GSA :
         Console.WriteLine(String.Format("GSA best score is : {0}", Optimizer.BestScore))
 
         Console.WriteLine("End of computation.. GSA...")
-End Sub
-
-Private Sub TestPSOGSA()
-
-        Optimizer = New MonoObjectiveEOALib.PSOGSA_Optimizer(100, 10, 0.5, 0.5)
-        AddHandler Optimizer.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
-
-        With Optimizer
-        .Agents_N=n
-        .Dimensions_D=d
-        .MaxIterations=kmax
-        .OptimizationType= OptimizationTypeEnum.Minimization
-        .Intervalles = intervalls
-        .LuanchComputation()
-        end With
-
-        ''Write the best solution for PSOGSA:
-        'Console.WriteLine("The best solution with PSOGSA is : ")
-        'For i = 0 To (d - 1)
-        '    Console.WriteLine(Optimizer.BestSolution(i))
-        'Next
-
-        'Write the best score for PSOGSA :
-        Console.WriteLine(String.Format("PSOGSA best score is : {0}", Optimizer.BestScore))
-	    Console.WriteLine("End of computation.. PSOGSA...")
-end sub
-
-private sub TestGWO()
-
-        Optimizer = New GWO_Optimizer(GWOVersionEnum.StandardGWO, 0.5)
-        AddHandler Optimizer.ObjectiveFunctionComputation, AddressOf BenchmarkFunctions.F1
-
-        With optimizer
-        .Agents_N=n
-        .Dimensions_D=d
-        .MaxIterations=kmax
-        .OptimizationType= OptimizationTypeEnum.Minimization
-        .Intervalles = intervalls
-        .LuanchComputation()
-        End With
-
-        ''Write the best solution for GWO:
-        'Console.WriteLine("The best solution with GWO is : ")
-        'For i = 0 To (d - 1)
-        '    Console.WriteLine(optimizer.BestSolution(i))
-        'Next
-
-        'Write the best score for GWO :
-        Console.WriteLine(String.Format("GWO best score is : {0}", optimizer.BestScore))
-    Console.WriteLine("End of computation.. GWO...")
-end sub 
-
+    End Sub
 End Module

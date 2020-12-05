@@ -8,7 +8,7 @@ Private Optimizer as IEvolutionaryAlgo
 Dim D As Int32
 dim N as int32
 dim Kmax as int32
-Dim Intervalls As List(Of Intervalle)
+Dim Intervalls As List(Of Interval)
 
  Sub Main(args As String())
 
@@ -22,9 +22,9 @@ Dim Intervalls As List(Of Intervalle)
         Kmax = 1000
 
         'initialize search space intevalls
-        Intervalls = new List(of Intervalle)
+        Intervalls = new List(of Interval)
         For i = 0 To (d - 1)
-            intervalls.Add(New Intervalle(-10, 10))
+            intervalls.Add(New Interval(-10, 10))
         Next
            '-----------------------------------------------------------------
          Console.WriteLine(" ")

@@ -1,4 +1,4 @@
-﻿Public Class Intervalle
+﻿Public Class Interval
     Public Sub New()
     End Sub
 
@@ -16,5 +16,5 @@
     Public Min_Value As Double
     Public Max_Value As Double
 
-    Public Property Name As String = "Intervalle"
+    Public Property Name As String = "Search Space Interval"
 End Class

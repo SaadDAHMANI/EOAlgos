@@ -52,12 +52,12 @@ Public Class GSA_Optimizer
         End Set
     End Property
 
-    Dim mIntervalles As List(Of Intervalle)
-    Public Property Intervalles As List(Of Intervalle) Implements IEvolutionaryAlgo.Intervalles
+    Dim mIntervalles As List(Of Interval)
+    Public Property Intervalles As List(Of Interval) Implements IEvolutionaryAlgo.Intervalles
         Get
             Return mIntervalles
         End Get
-        Set(value As List(Of Intervalle))
+        Set(value As List(Of Interval))
             mIntervalles = value
         End Set
     End Property

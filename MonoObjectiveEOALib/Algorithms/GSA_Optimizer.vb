@@ -238,11 +238,7 @@ Public Class GSA_Optimizer
     Public Property ElitistCheck As GSAElitistCheckEnum = GSAElitistCheckEnum.Equation21
 
     Public Overrides Sub InitializeOptimizer()
-        For Each interval In SearchIntervals
-            If interval.Max_Value < interval.Min_Value Then
-                Throw New Exception("interval.Max_Value must be > interval.Min_Value ")
-            End If
-        Next
+
 
         mBestChart = New List(Of Double)
         mMeanChart = New List(Of Double)

@@ -6,7 +6,7 @@ Public MustInherit Class EvolutionaryAlgoBase
 #Region "Common of Interface: IEvolutionaryAlgo"
 
     ''' <summary>
-    ''' Algo constructor. This constructor initialize the search population.
+    ''' Algo constructor.
     ''' </summary>
     ''' <param name="searchAgentCount"></param>
     ''' <param name="searchSpaceDimension"></param>
@@ -15,7 +15,7 @@ Public MustInherit Class EvolutionaryAlgoBase
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
         SearchIntervals = searchSpaceIntervals
-        InitializePopulation()
+        'InitializePopulation()
     End Sub
     Public Sub New()
 

@@ -32,24 +32,24 @@ Public Class GSA_Optimizer
         End Get
     End Property
 
-    Dim mBestChart As List(Of Double)
+    Dim _BestChart As List(Of Double)
     Public Overrides ReadOnly Property BestChart As List(Of Double)
         Get
-            Return mBestChart
+            Return _BestChart
         End Get
     End Property
 
-    Dim mWorstChart As List(Of Double)
+    Dim _WorstChart As List(Of Double)
     Public Overrides ReadOnly Property WorstChart As List(Of Double)
         Get
-            Return mWorstChart
+            Return _WorstChart
         End Get
     End Property
 
-    Dim mMeanChart As List(Of Double)
+    Dim _MeanChart As List(Of Double)
     Public Overrides ReadOnly Property MeanChart As List(Of Double)
         Get
-            Return mMeanChart
+            Return _MeanChart
         End Get
     End Property
 
@@ -239,10 +239,9 @@ Public Class GSA_Optimizer
 
     Public Overrides Sub InitializeOptimizer()
 
-
-        mBestChart = New List(Of Double)
-        mMeanChart = New List(Of Double)
-        mWorstChart = New List(Of Double)
+        _BestChart = New List(Of Double)
+        _MeanChart = New List(Of Double)
+        _WorstChart = New List(Of Double)
 
         D = Dimensions_D - 1
         N = PopulationSize_N - 1

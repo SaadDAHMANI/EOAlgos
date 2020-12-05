@@ -15,21 +15,24 @@ Public Class GWO_Optimizer
         End Get
     End Property
 
+    Dim _BestChart As List(Of Double)
     Public Overrides ReadOnly Property BestChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _BestChart
         End Get
     End Property
 
+    Dim _WorstChart As List(Of Double)
     Public Overrides ReadOnly Property WorstChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _WorstChart
         End Get
     End Property
 
+    Dim _MeanChart As List(Of Double)
     Public Overrides ReadOnly Property MeanChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _MeanChart
         End Get
     End Property
 
@@ -50,6 +53,9 @@ Public Class GWO_Optimizer
     End Sub
 
     Public Overrides Sub InitializeOptimizer()
+        _BestChart = New List(Of Double)
+        _MeanChart = New List(Of Double)
+        _WorstChart = New List(Of Double)
 
 
 

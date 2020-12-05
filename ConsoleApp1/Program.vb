@@ -13,19 +13,19 @@ Module Program
     Sub Main(args As String())
 
         'initialisation of search sapce dimension
-        D = 7
+        D = 10
 
         'initialisation of search agents count 
-        N = 30
+        N = 20
 
-        Kmax = 1000
+        Kmax = 1200
 
         'initialize search space intevalls
 
         Intervals = New List(Of Interval)
 
         For i = 0 To (D - 1)
-            Intervals.Add(New Interval(1, 10))
+            Intervals.Add(New Interval(-120, 10))
         Next
 
         TestGSA(N, D, Intervals)
@@ -36,7 +36,7 @@ Module Program
 
     Private Sub TestGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
-        Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 10.5)
+        Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 5)
 
         AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 

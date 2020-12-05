@@ -1,6 +1,10 @@
 Imports System.ComponentModel
 
 Public Class GWO_Optimizer
+
+End Class
+
+Public Class GWO_OptimizerOld
     '    Implements IEvolutionaryAlgo
 
     '    Public Sub new ()

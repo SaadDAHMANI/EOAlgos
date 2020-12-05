@@ -70,6 +70,10 @@ Public MustInherit Class EvolutionaryAlgoBase
     End Property
 
     Dim Chronos As Stopwatch
+    ''' <summary>
+    ''' Comutation time in Milliseconds MS.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ComputationTime As Long Implements IEvolutionaryAlgo.ComputationTime
         Get
             If Object.Equals(Chronos, Nothing) Then

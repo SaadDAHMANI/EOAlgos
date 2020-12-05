@@ -30,7 +30,7 @@ Module Program
 
         TestGSA(N, D, Intervals)
 
-        Console.WriteLine(" ")
+        Console.WriteLine("Comutation time = {0} MS", Optimizer.ComputationTime)
 
     End Sub
 

@@ -120,11 +120,20 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public MustOverride Sub InitializeOptimizer()
 
     Public Overridable Sub LuanchComputation() Implements IEvolutionaryAlgo.LuanchComputation
+
         RaiseEvent OptimizationStarting(Me, New EventArgs)
+        If Object.Equals(Chronos, Nothing) Then
+            Chronos = New Stopwatch()
+            Chronos.Start()
+        Else
+            Chronos.Restart()
+        End If
 
         For i As Integer = 0 To (MaxIterations - 1)
             RunEpoch()
         Next
+
+        Chronos.Stop()
 
         RaiseEvent OptimizationTerminated(Me, New EventArgs)
     End Sub

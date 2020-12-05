@@ -22,6 +22,8 @@
     ReadOnly Property Solution_Fitness As Dictionary(Of String, Double)
     ReadOnly Property CurrentBestFitness As Double
 
+    ReadOnly Property CurrentIteration As Integer
+
     Event ObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
 
 End Interface

@@ -67,8 +67,6 @@ Public Class GSA_Optimizer
         End Get
     End Property
 
-    Dim CurrentIteration As Integer = 0I
-
 #Region "GSA_Optimization"
     Public Sub Space_Bound()
         'from matlab site :
@@ -195,8 +193,6 @@ Public Class GSA_Optimizer
 
         '5: Agent movement. eq.11-12
         Move(Population, accelerations, V)
-
-        CurrentIteration += 1
 
         mCurrentBestFitness = Fbest
         BestLine = Lbest

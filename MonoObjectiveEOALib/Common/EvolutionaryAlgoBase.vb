@@ -116,9 +116,15 @@ Public MustInherit Class EvolutionaryAlgoBase
         End Set
     End Property
 
+    Dim _CurrentIteration As Integer
+    Public Overridable ReadOnly Property CurrentIteration As Integer Implements IEvolutionaryAlgo.CurrentIteration
+        Get
+            Return Dimensions_D
+        End Get
+    End Property
+
     Public MustOverride Sub RunEpoch() Implements IEvolutionaryAlgo.RunEpoch
     Public MustOverride Sub InitializeOptimizer()
-
     Public Overridable Sub LuanchComputation() Implements IEvolutionaryAlgo.LuanchComputation
 
         RaiseEvent OptimizationStarting(Me, New EventArgs)
@@ -129,8 +135,11 @@ Public MustInherit Class EvolutionaryAlgoBase
             Chronos.Restart()
         End If
 
+        _CurrentIteration = 0
+
         For i As Integer = 0 To (MaxIterations - 1)
             RunEpoch()
+            _CurrentIteration += 1
         Next
 
         Chronos.Stop()

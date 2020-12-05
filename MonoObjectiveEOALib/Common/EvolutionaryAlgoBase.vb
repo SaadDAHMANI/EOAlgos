@@ -135,7 +135,7 @@ Public MustInherit Class EvolutionaryAlgoBase
             Chronos.Restart()
         End If
 
-        _CurrentIteration = 0
+        _CurrentIteration = 1
 
         For i As Integer = 0 To (MaxIterations - 1)
             RunEpoch()

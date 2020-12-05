@@ -147,7 +147,7 @@ Public Class GSA_Optimizer
             best_X = Array.IndexOf(Fitness, best)
         End If
 
-        If CurrentIteration = 0 Then
+        If CurrentIteration = 1 Then
             Fbest = best
             GetBestLine(Population, Lbest, best_X)
         End If

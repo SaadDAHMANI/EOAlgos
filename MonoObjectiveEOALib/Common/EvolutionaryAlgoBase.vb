@@ -119,7 +119,7 @@ Public MustInherit Class EvolutionaryAlgoBase
     Dim _CurrentIteration As Integer
     Public Overridable ReadOnly Property CurrentIteration As Integer Implements IEvolutionaryAlgo.CurrentIteration
         Get
-            Return Dimensions_D
+            Return _CurrentIteration
         End Get
     End Property
 

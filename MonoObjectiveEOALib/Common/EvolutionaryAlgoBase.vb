@@ -55,7 +55,7 @@ Public MustInherit Class EvolutionaryAlgoBase
             Return iterationsMax
         End Get
         Set(value As Integer)
-            iterationsMax = Math.Max(value, 0)
+            iterationsMax = Math.Max(value, 1)
         End Set
     End Property
 

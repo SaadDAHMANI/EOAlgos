@@ -17,6 +17,7 @@ Module Program
 
         'initialisation of search agents count 
         N = 30
+
         Kmax = 1000
 
         'initialize search space intevalls
@@ -34,13 +35,15 @@ Module Program
     End Sub
 
     Private Sub TestGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+
         Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 10.5)
+
         AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         'initialize algo
 
         With Optimizer
-
+            .MaxIterations = Kmax
             .OptimizationType = OptimizationTypeEnum.Minimization
 
             .LuanchComputation()

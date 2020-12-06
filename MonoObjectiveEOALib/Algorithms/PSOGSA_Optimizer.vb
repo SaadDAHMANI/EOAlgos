@@ -67,6 +67,48 @@ Public Class PSOGSA_Optimizer
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
         Throw New NotImplementedException()
     End Sub
+    Public Sub New()
+    End Sub
+
+    '---------------GSA params---------------
+    Public Property Alpha As Double = 23.0R
+    Public Property G0 As Double = 1.0R
+
+    Private Const Eps As Double = 0.00000000000000022204
+    Private Acceleration As Double(,)
+
+    '-------------PSO Variables ------------
+    Private Velocity(,) As Double
+    Public Property C1 As Double = 0.5R 'C1 in Equation (9)
+    Public Property C2 As Double = 1.5R 'C2 in Equation (9)
+
+    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer)
+        Dimensions_D = dimensions
+        PopulationSize_N = agents
+        MaxIterations = iterationMax
+    End Sub
+
+    Public Sub New(gO As Double, alpha_g As Double, c_1 As Double, c_2 As Double)
+        Me.G0 = gO
+        Me.Alpha = alpha_g
+        Me.C1 = c_1
+        Me.C2 = c_2
+    End Sub
+    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer, gO As Double, alpha_g As Double, c_1 As Double, c_2 As Double)
+        Dimensions_D = dimensions
+        Agents_N = agents
+        MaxIterations = iterationMax
+        Me.G0 = gO
+        Me.Alpha = alpha_g
+        Me.C1 = c_1
+        Me.C2 = c_2
+    End Sub
+
+
+
+
+
+
     '        Implements IEvolutionaryAlgo
 
     '    Public Sub New()
@@ -499,17 +541,7 @@ Public Class PSOGSA_Optimizer
     '        Private Positions() As Double 'Positions of one agent in all dimensions D.
     '        Private Mass() As Double
     '        Private Force(,) As Double
-    '        '---------------GSA params---------------
-    '        Public Property Alpha As Double = 23.0R
-    '    Public Property G0 As Double = 1.0R
-
-    '    Private Const Eps As Double = 0.00000000000000022204
-    '        Private Acceleration As Double(,)
-
-    '        '-------------PSO Variables ------------
-    '        Private Velocity(,) As Double
-    '        Public Property C1 As Double = 0.5R 'C1 in Equation (9)
-    '        Public Property C2 As Double = 1.5R 'C2 in Equation (9)
+    '      
 
 End Class
 

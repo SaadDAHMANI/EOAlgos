@@ -94,15 +94,16 @@ Public Class PSOGSA_Optimizer
         Me.C1 = c_1
         Me.C2 = c_2
     End Sub
-    Public Sub New(dimensions As Integer, agents As Integer, iterationMax As Integer, gO As Double, alpha_g As Double, c_1 As Double, c_2 As Double)
+    Public Sub New(populationSize As Integer, dimensions As Integer, iterationMax As Integer, gO As Double, alphaGSA As Double, c_1 As Double, c_2 As Double)
+        PopulationSize_N = populationSize
         Dimensions_D = dimensions
-        Agents_N = agents
         MaxIterations = iterationMax
-        Me.G0 = gO
-        Me.Alpha = alpha_g
-        Me.C1 = c_1
-        Me.C2 = c_2
+        G0 = gO
+        Alpha = alphaGSA
+        C1 = c_1
+        C2 = c_2
     End Sub
+
 
 
 

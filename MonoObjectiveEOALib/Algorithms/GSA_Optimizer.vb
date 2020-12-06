@@ -25,7 +25,6 @@ Public Class GSA_Optimizer
         Me.Alpha = alpha_g
     End Sub
 
-
     Public Overrides ReadOnly Property BestSolution As Double()
         Get
             Return BestLine
@@ -60,10 +59,10 @@ Public Class GSA_Optimizer
         End Get
     End Property
 
-    Dim mCurrentBestFitness As Double
+    Dim _CurrentBestFitness As Double
     Public Overrides ReadOnly Property CurrentBestFitness As Double
         Get
-            Return mCurrentBestFitness
+            Return _CurrentBestFitness
         End Get
     End Property
 
@@ -194,7 +193,7 @@ Public Class GSA_Optimizer
         '5: Agent movement. eq.11-12
         Move(Population, accelerations, V)
 
-        mCurrentBestFitness = Fbest
+        _CurrentBestFitness = Fbest
         BestLine = Lbest
 
     End Sub

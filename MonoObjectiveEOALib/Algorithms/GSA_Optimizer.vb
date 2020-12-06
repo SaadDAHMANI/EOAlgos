@@ -238,13 +238,13 @@ Public Class GSA_Optimizer
     ''' <returns></returns>
     Public Property ElitistCheck As GSAElitistCheckEnum = GSAElitistCheckEnum.Equation21
 
-    Public Overrides ReadOnly Property AlgorithmeName As Object
+    Public Overrides ReadOnly Property AlgorithmName As Object
         Get
             Return "GSA"
         End Get
     End Property
 
-    Public Overrides ReadOnly Property AlgorithmeFullName As Object
+    Public Overrides ReadOnly Property AlgorithmFullName As Object
         Get
             Return "Gravitational Search Algorithm"
         End Get

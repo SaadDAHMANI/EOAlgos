@@ -54,13 +54,13 @@ Public Class GWO_Optimizer
         End Get
     End Property
 
-    Public Overrides ReadOnly Property AlgorithmeName As Object
+    Public Overrides ReadOnly Property AlgorithmName As Object
         Get
             Return "GWO"
         End Get
     End Property
 
-    Public Overrides ReadOnly Property AlgorithmeFullName As Object
+    Public Overrides ReadOnly Property AlgorithmFullName As Object
         Get
             Return "Grey Wolf Optimizer"
         End Get

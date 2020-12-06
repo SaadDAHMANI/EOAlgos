@@ -7,6 +7,10 @@
     Property Dimensions_D As Integer
     Property PopulationSize_N As Integer
 
+
+    ReadOnly Property AlgorithmName
+    ReadOnly Property AlgorithmFullName
+
     Property Population As Double()()
     Property SearchIntervals As List(Of Interval)
     Property MaxIterations As Integer

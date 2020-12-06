@@ -20,10 +20,8 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public Sub New()
     End Sub
 
-    Public MustOverride ReadOnly Property AlgorithmeName
-    Public MustOverride ReadOnly Property AlgorithmeFullName
-
-
+    Public MustOverride ReadOnly Property AlgorithmName Implements IEvolutionaryAlgo.AlgorithmName
+    Public MustOverride ReadOnly Property AlgorithmFullName Implements IEvolutionaryAlgo.AlgorithmFullName
 
     Dim dimensionD As Integer = 1
     ''' <summary>

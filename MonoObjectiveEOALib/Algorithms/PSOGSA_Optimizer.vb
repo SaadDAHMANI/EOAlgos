@@ -104,10 +104,7 @@ Public Class PSOGSA_Optimizer
         C2 = c_2
     End Sub
 
-
-
-
-
+    '''********************************************************************************************************
 
 
     '        Implements IEvolutionaryAlgo

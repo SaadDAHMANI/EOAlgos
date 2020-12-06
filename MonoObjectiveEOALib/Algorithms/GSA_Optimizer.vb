@@ -8,9 +8,11 @@ Public Class GSA_Optimizer
     ''' <summary>
     ''' Algo constructor. This constructor initialize the search population.
     ''' </summary>
-    ''' <param name="searchAgentCount"></param>
-    ''' <param name="searchSpaceDimension"></param>
-    ''' <param name="algoParams"></param>
+    ''' <param name="populationSize">Search population size</param>
+    ''' <param name="searchSpaceDimension">Search space dimension</param>
+    ''' <param name="searchSpaceIntervals">Lower and upper bounds of each search space dimension</param>
+    ''' <param name="Go">GSA Parameter</param>
+    ''' <param name="alpha">GSA Parameter </param>
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Interval), Go As Double, alpha As Double)
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
@@ -236,6 +238,18 @@ Public Class GSA_Optimizer
     ''' <returns></returns>
     Public Property ElitistCheck As GSAElitistCheckEnum = GSAElitistCheckEnum.Equation21
 
+    Public Overrides ReadOnly Property AlgorithmeName As Object
+        Get
+            Return "GSA"
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property AlgorithmeFullName As Object
+        Get
+            Return "Gravitational Search Algorithm"
+        End Get
+    End Property
+
     Public Overrides Sub InitializeOptimizer()
 
         _BestChart = New List(Of Double)
@@ -273,7 +287,6 @@ Public Class GSA_Optimizer
     ''' <param name="fitnessArray">Fitness array of Agents X(N,D)</param>
     Private Sub EvaluateFitness(ByRef fitnessArray() As Double)
         Try
-
             For i = 0 To N
                 fitnessValue = Double.NaN
                 ComputeObjectiveFunction(Population(i), fitnessValue)

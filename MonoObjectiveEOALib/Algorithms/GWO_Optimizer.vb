@@ -6,6 +6,13 @@ Public Class GWO_Optimizer
     Public Sub New()
     End Sub
 
+    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Interval))
+        PopulationSize_N = populationSize
+        Dimensions_D = searchSpaceDimension
+        SearchIntervals = searchSpaceIntervals
+        InitializePopulation()
+    End Sub
+
     Dim _BestSolution As Double()
     Public Overrides ReadOnly Property BestSolution As Double()
         Get
@@ -47,6 +54,18 @@ Public Class GWO_Optimizer
         End Get
     End Property
 
+    Public Overrides ReadOnly Property AlgorithmeName As Object
+        Get
+            Return "GWO"
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property AlgorithmeFullName As Object
+        Get
+            Return "Grey Wolf Optimizer"
+        End Get
+    End Property
+
     Public Overrides Sub RunEpoch()
         If OptimizationType = OptimizationTypeEnum.Minimization Then
             RunEpoch_Minimization()
@@ -62,7 +81,56 @@ Public Class GWO_Optimizer
         _WorstChart = New List(Of Double)
         _BestSolution = New Double(Dimensions_D - 1) {}
 
+        If OptimizationType = OptimizationTypeEnum.Minimization Then
+            bestObjectiveFunct = Double.MaxValue
+            value_Alpha = Double.MaxValue  'la valeur de loup Alpha.
+            value_Beta = Double.MaxValue 'la valeur de loup Beta.
+            value_Delta = Double.MaxValue 'la valeur de loup Delta.
 
+        Else
+            bestObjectiveFunct = Double.MinValue
+            value_Alpha = Double.MinValue  'la valeur de loup Alpha.
+            value_Beta = Double.MinValue 'la valeur de loup Beta.
+            value_Delta = Double.MinValue 'la valeur de loup Delta.
+
+        End If
+
+        bestPositions = New Double(Dimensions_D - 1) {}
+        objectiveFunctValues = New Double(PopulationSize_N - 1) {}
+        Positions_Alpha = New Double(Dimensions_D - 1) {}
+        Positions_Beta = New Double(Dimensions_D - 1) {}
+        Positions_Delta = New Double(Dimensions_D - 1) {}
+        '-----------------------------------------------------------------
+        ''1. faire des bouclages autant que le nombre de loup (points 1a - 1b).
+        'For i As Integer = 0 To (PopulationSize_N - 1)
+        '    'daftarPosisi : Liste des positions
+        '    positionsList(i) = New Double((Dimensions_D - 1)) {}
+
+        '    '1 a. donner des positions al�atoires sur chacun des loups gris,
+        '    ' autant que le nombre de dimensions
+        '    'Calculer ensuite la valeur de la fonction � cette position
+        '    'Description plus de d�tails sur cette fonction peut �tre vu
+        '    ' dans l'explication du script ci-dessous.
+
+        '    For j As Integer = 0 To (Dimensions_D - 1)
+        '        positionsList(i)(j) = (Intervalles(j).Max_Value - Intervalles(j).Min_Value) * Rndm.NextDouble() + Intervalles(j).Min_Value
+        '    Next j
+
+        '    objectiveFunctValues(i) = ObjectiveFunction(positionsList(i))
+
+        '    '-------------------------------------------------------------------------------------
+
+        '    '1 b. Si la valeur d'une position al�atoire est meilleure que la meilleure,
+        '    ' la valeur de fonction 
+        '    'alors, prenez cette position comme la meilleure position tout en
+        '    If objectiveFunctValues(i) < bestObjectiveFunct Then
+        '        bestObjectiveFunct = objectiveFunctValues(i)
+        '        Array.Copy(positionsList(i), bestPositions, dimensionD)
+        '        bestPositionIndex = i
+        '    End If
+        'Next i
+
+        InitializePopulation()
     End Sub
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
@@ -80,7 +148,7 @@ Public Class GWO_Optimizer
 
     'daftarPosisi : Liste des positions
     'Dim positionsList As Double()() = New Double((wolfCountN - 1))() {}
-    Dim positionsList As Double()()
+    'Dim positionsList As Double()()
 
     'nilaiFungsi : la valeur de la fonction
     'Dim objectiveFunctValues(wolfCountN - 1) As Double
@@ -103,9 +171,6 @@ Public Class GWO_Optimizer
     'Dim Positions_Delta(dimensionD - 1) As Double
     Dim Positions_Delta() As Double
     Dim value_Delta As Double = Double.MaxValue 'la valeur de loup Delta.
-
-    '2. le processus de calcul autant que le nombre d'it�rations (point 2a - 2c)�
-    Dim iteration As Integer = 0
 
     '---------------------------------- Variables -------------------------------
     Dim newObjectiveFunctValue As Double = 0R
@@ -145,29 +210,29 @@ Public Class GWO_Optimizer
             '---------------------------------
 
             '2a. a fait le calcul sur chaque loup gris (points 2a1 - 2a6))�
-            For i As Integer = 0 To (positionsList.Length - 1)
+            For i As Integer = 0 To (Population.Length - 1)
 
                 '2a1. Faire le calcul sur les positions respectives du loup gris
                 'Si une position sur le calcul pr�c�dent s'est av�r�e �tre en dehors
                 ' des limites de la position qui sont autoris�s,
                 ' puis la valeur de retour afin de s'adapter � la limite
-                For j As Integer = 0 To positionsList(i).Length - 1
-                    If positionsList(i)(j) < SearchIntervals(j).Min_Value Then
+                For j As Integer = 0 To Population(i).Length - 1
+                    If Population(i)(j) < SearchIntervals(j).Min_Value Then
                         'positionsList(i)(j) = (Intervalles(j).Max_Value - Intervalles(j).Min_Value) * Rndm.NextDouble() + Intervalles(j).Min_Value
-                        positionsList(i)(j) = SearchIntervals(j).Min_Value
+                        Population(i)(j) = SearchIntervals(j).Min_Value
 
-                    ElseIf positionsList(i)(j) > SearchIntervals(j).Max_Value Then
-                        'positionsList(i)(j) = (Intervalles(j).Max_Value - Intervalles(j).Min_Value) * Rndm.NextDouble() + Intervalles(j).Min_Value
-                        positionsList(i)(j) = SearchIntervals(j).Max_Value
+                    ElseIf Population(i)(j) > SearchIntervals(j).Max_Value Then
+                        'Population(i)(j) = (Intervalles(j).Max_Value - Intervalles(j).Min_Value) * Rndm.NextDouble() + Intervalles(j).Min_Value
+                        Population(i)(j) = SearchIntervals(j).Max_Value
 
                     End If
                 Next j
 
                 '2a2. Calculer la valeur de la fonction � cette position
                 'nilaiFungsiBaru : la valeur des nouvelles fonctions
-                'Dim newObjectiveFunctValue As Double = ObjectiveFunction(positionsList(i))
+                'Dim newObjectiveFunctValue As Double = ObjectiveFunction(Population(i))
 
-                newObjectiveFunctValue = ObjectiveFunctionComputation(positionsList(i))
+                newObjectiveFunctValue = ObjectiveFunctionComputation(Population(i))
                 'Debug.Print("It={0}, W={1}, Fit = {2} ", iteration, i, newObjectiveFunctValue.ToString())
 
                 '2a3. Si la valeur de la nouvelle fonction est meilleure que la valeur alpha,
@@ -177,7 +242,7 @@ Public Class GWO_Optimizer
 
                     value_Alpha = newObjectiveFunctValue
 
-                    Positions_Alpha = positionsList(i)
+                    Positions_Alpha = Population(i)
 
                 End If
 
@@ -188,7 +253,7 @@ Public Class GWO_Optimizer
 
                     value_Beta = newObjectiveFunctValue
 
-                    Positions_Beta = positionsList(i)
+                    Positions_Beta = Population(i)
 
                 End If
 
@@ -199,7 +264,7 @@ Public Class GWO_Optimizer
 
                     value_Delta = newObjectiveFunctValue
 
-                    Positions_Delta = positionsList(i)
+                    Positions_Delta = Population(i)
 
                 End If
 
@@ -227,12 +292,12 @@ Public Class GWO_Optimizer
             'Un a aura des valeurs initiales 2 et diminuera graduellement vers le 0 autant 
             ' de fois que le nombre d'it�rations
 
-            a = 2 * (1 - (iteration / MaxIterations))
+            a = 2 * (1 - (CurrentIteration / MaxIterations))
 
             '2c. Faire le calcul � chaque position du loup gris qui existe (poin 2c1 - 2c4)
-            For i As Integer = 0 To (positionsList.Length - 1)
+            For i As Integer = 0 To (Population.Length - 1)
 
-                For j As Integer = 0 To (positionsList(i).Length - 1)
+                For j As Integer = 0 To (Population(i).Length - 1)
 
                     '2c1. Faire le calcul pour calculer la valeur de la X_Alpha (poin 2c1a - 2c1e)
 
@@ -251,8 +316,8 @@ Public Class GWO_Optimizer
                     C_Alpha = (2 * r2)
 
                     '2c1d. Calculer la valeur de D, alpha avec la formule : D_alpha=abs(C1*posisiAlpha(j)-daftarPosisi(i,j))
-                    'Dim D_Alpha As Double = Math.Abs(C_Alpha * Positions_Alpha(j) - positionsList(i)(j))
-                    D_Alpha = Math.Abs(((C_Alpha * Positions_Alpha(j)) - positionsList(i)(j)))
+                    'Dim D_Alpha As Double = Math.Abs(C_Alpha * Positions_Alpha(j) - Population(i)(j))
+                    D_Alpha = Math.Abs(((C_Alpha * Positions_Alpha(j)) - Population(i)(j)))
 
                     '2c1e. Calculer la valeur de X alpha avec la formule : X1=posisiAlpha(j)-A1*D_alpha;
                     'Dim X_Alpha As Double = Positions_Alpha(j) - A_Alpha * D_Alpha
@@ -264,7 +329,7 @@ Public Class GWO_Optimizer
 
                     A_Beta = (2 * a * r1) - a
                     C_Beta = (2 * r2)
-                    D_Beta = Math.Abs(((C_Beta * Positions_Beta(j)) - positionsList(i)(j)))
+                    D_Beta = Math.Abs(((C_Beta * Positions_Beta(j)) - Population(i)(j)))
                     X_Beta = Positions_Beta(j) - (A_Beta * D_Beta)
 
                     '2c3. Faire le m�me calcul (point 2c1) pour calculer la valeur de Delta X
@@ -273,18 +338,13 @@ Public Class GWO_Optimizer
 
                     A_Delta = (2 * a * r1) - a
                     C_Delta = (2 * r2)
-                    D_Delta = Math.Abs(((C_Delta * Positions_Delta(j)) - positionsList(i)(j)))
+                    D_Delta = Math.Abs(((C_Delta * Positions_Delta(j)) - Population(i)(j)))
                     X_Delta = Positions_Delta(j) - (A_Delta * D_Delta)
 
                     '2c4. Calculez la nouvelle valeur de position avec la formule : daftarPosisi(i,j)=(X1+X2+X3)/3
-
-                    'positionsList(i)(j) = (X_Alpha + X_Beta + X_Delta) / 3
-                    positionsList(i)(j) = ((1 * X_Alpha) + (1 * X_Beta) + (1 * X_Delta)) / 3
-
+                    Population(i)(j) = (X_Alpha + X_Beta + X_Delta) / 3
                 Next j
             Next i
-
-            iteration += 1
             '-----------------Best Chart : Best fitness evolution----------------
             _CurrentBestFitness = value_Alpha
             _BestChart.Add(value_Alpha)

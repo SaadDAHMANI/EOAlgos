@@ -18,8 +18,12 @@ Public MustInherit Class EvolutionaryAlgoBase
         'InitializePopulation()
     End Sub
     Public Sub New()
-
     End Sub
+
+    Public MustOverride ReadOnly Property AlgorithmeName
+    Public MustOverride ReadOnly Property AlgorithmeFullName
+
+
 
     Dim dimensionD As Integer = 1
     ''' <summary>
@@ -193,8 +197,6 @@ Public MustInherit Class EvolutionaryAlgoBase
         End Select
     End Sub
 
-
-
     Public Event OptimizationStarting(sender As Object, e As EventArgs)
     Public Event OptimizationTerminated(sender As Object, e As EventArgs)
     Public Event ObjectiveFunction(positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunction
@@ -202,7 +204,6 @@ Public MustInherit Class EvolutionaryAlgoBase
         RaiseEvent ObjectiveFunction(positions, fitnessValue)
     End Sub
     Public MustOverride Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
-
 #End Region
 
 End Class

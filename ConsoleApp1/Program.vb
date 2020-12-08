@@ -29,7 +29,17 @@ Module Program
         Next
 
         TestGSA(N, D, Intervals)
+
+        Console.WriteLine("____________________________________________________")
+
         TestGWO(N, D, Intervals)
+
+        Console.WriteLine("____________________________________________________")
+
+        TestDBA(N, D, Intervals)
+
+        Console.WriteLine("____________________________________________________")
+
 
     End Sub
 
@@ -94,7 +104,7 @@ Module Program
 
     Private Sub TestDBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
-        Optimizer = New DBAT_Optimizer(N, D, LUBounds)
+        Optimizer = New DBA_Optimizer(N, D, LUBounds)
 
         AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 

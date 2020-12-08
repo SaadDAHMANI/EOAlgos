@@ -1,6 +1,14 @@
 ﻿Public Class DBA_Optimizer
     Inherits EvolutionaryAlgoBase
 
+    Public Sub New()
+    End Sub
+    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Interval))
+        PopulationSize_N = populationSize
+        Dimensions_D = searchSpaceDimension
+        SearchIntervals = searchSpaceIntervals
+        InitializePopulation()
+    End Sub
     Public Overrides ReadOnly Property AlgorithmName As Object
         Get
             Return "DBA"

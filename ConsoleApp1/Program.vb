@@ -49,17 +49,17 @@ Module Program
 
         End With
 
-        Console.WriteLine("The best solution with {0} is : ", Optimizer.AlgorithmeName)
+        Console.WriteLine("The best solution with {0} is : ", Optimizer.AlgorithmName)
         For i = 0 To (D - 1)
             Console.WriteLine(Optimizer.BestSolution(i))
         Next
 
         'Write the best score for algo :
-        Console.WriteLine(String.Format("{0} best score is : {1}", Optimizer.AlgorithmeName, Optimizer.BestScore))
+        Console.WriteLine(String.Format("{0} best score is : {1}", Optimizer.AlgorithmName, Optimizer.BestScore))
 
-        Console.WriteLine("{0} - Comutation time = {1} MS", Optimizer.AlgorithmeName, Optimizer.ComputationTime)
+        Console.WriteLine("{0} - Comutation time = {1} MS", Optimizer.AlgorithmName, Optimizer.ComputationTime)
 
-        Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmeName)
+        Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmName)
 
     End Sub
 
@@ -78,16 +78,16 @@ Module Program
             .LuanchComputation()
         End With
 
-        Console.WriteLine("The best solution with {0} is : ", Optimizer.AlgorithmeName)
+        Console.WriteLine("The best solution with {0} is : ", Optimizer.AlgorithmName)
         For i = 0 To (D - 1)
             Console.WriteLine(Optimizer.BestSolution(i))
         Next
 
         'Write the best score for algo :
-        Console.WriteLine(String.Format("{0} best score is : {1}", Optimizer.AlgorithmeName, Optimizer.BestScore))
+        Console.WriteLine(String.Format("{0} best score is : {1}", Optimizer.AlgorithmName, Optimizer.BestScore))
 
-        Console.WriteLine("{0} - Comutation time = {1} MS", Optimizer.AlgorithmeName, Optimizer.ComputationTime)
+        Console.WriteLine("{0} - Comutation time = {1} MS", Optimizer.AlgorithmName, Optimizer.ComputationTime)
 
-        Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmeName)
+        Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmName)
     End Sub
 End Module

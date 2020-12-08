@@ -19,33 +19,38 @@
         End Get
     End Property
 
+    Dim _BestChart As List(Of Double)
     Public Overrides ReadOnly Property BestChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _BestChart
         End Get
     End Property
 
+    Dim _WorstChart As List(Of Double)
     Public Overrides ReadOnly Property WorstChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _WorstChart
         End Get
     End Property
 
+    Dim _MeanChart As List(Of Double)
     Public Overrides ReadOnly Property MeanChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _MeanChart
         End Get
     End Property
 
+    Dim _Solution_Fitness As Dictionary(Of String, Double)
     Public Overrides ReadOnly Property Solution_Fitness As Dictionary(Of String, Double)
         Get
-            Throw New NotImplementedException()
+            Return _Solution_Fitness
         End Get
     End Property
 
+    Dim _CurrentBestFitness As Double
     Public Overrides ReadOnly Property CurrentBestFitness As Double
         Get
-            Throw New NotImplementedException()
+            Return _CurrentBestFitness
         End Get
     End Property
 
@@ -71,17 +76,17 @@ Public Property Ainf As Double
     End Set
 End Property
 
-Private _R0 as Double =0.1
-Public Property R0 As Type
-    Get
-        Return _R0
-    End Get
-    Set(value As Double)
-        _R0= value
-    End Set
-End Property
+    Private _R0 As Double = 0.1
+    Public Property R0 As Double
+        Get
+            Return _R0
+        End Get
+        Set(value As Double)
+            _R0 = value
+        End Set
+    End Property
 
-Private _Rinf as Double=0.7
+    Private _Rinf as Double=0.7
 Public Property Rinf As Double
     Get
         Return _Rinf
@@ -129,18 +134,18 @@ Private ii as Integer = 0
 
             q = 2
 
-            If Fit(ii)<Fit(i) Then
-            For j as Integer=0 to D
+            If Fit(ii) < Fit(i) Then
+                For j As Integer = 0 To D
                     V(i, j) = (Population(ii)(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q + (Best(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q
                 Next
-        End if
+            End If
 
 
 
 
 
 
-            
+
         Next
         
 
@@ -159,22 +164,22 @@ Private ii as Integer = 0
 
         D = Dimensions_D - 1
         N = PopulationSize_N - 1
-        W0=new Double[D]{}
-        Winf=new Double[D]{}
-        A = new Double[N]{}
-        R= new Double[N]{}
-        Fit= new Double[N]{}
-        W=new Double[N,D]{}
-        V=new Double[N,D]{}
+        W0 = New Double(D) {}
+        Winf = New Double(D) {}
+        A = New Double(N) {}
+        R = New Double(N) {}
+        Fit = New Double(N) {}
+        W = New Double(N, D) {}
+        V = New Double(N, D) {}
 
         For j as Integer = 0 to D
-            W0[j]=(SearchIntervals[j].Max_Value-SearchIntervals[j].Min_Value)/4
-            Winf[j]=W0[j]/100
+            W0(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) / 4
+            Winf(j) = W0(j) / 100
         Next    
 
         For i as integer = 0 to N
-            A[i]=A0
-            R[i]=R0
+            A(i) = A0
+            R(i) = R0
         Next        
        
         'Inintilize population
@@ -186,14 +191,14 @@ Private ii as Integer = 0
             Fit(i)=fitnessValue
 
             For j As Integer = 0 To D
-                W[i,j]=W0
-                V[i,j]=0
+                W(i, j) = W0(j)
+                V(i, j) = 0
             Next                 
         Next
          
         Fmin=Fit.Min()
-        Iindex =Fit.IndexOf(Fmin)
-        Fitinn=Fmin
+        Iindex = Array.IndexOf(Fit, Fmin)
+        Fitinn =Fmin
         Best=Population(Iindex)
     End Sub
 

@@ -51,15 +51,122 @@
 
 #Region "DBA params" 
 
+Private  _A0 as Double=0.9
+ Public Property A0 As Double
+     Get
+         Return _A0
+     End Get
+     Set(value As Double)
+         _A0=value 
+     End Set
+ End Property
+
+Private _Ainf as Double =0.6
+Public Property Ainf As Double
+    Get
+        Return _Ainf
+    End Get
+    Set(value As Double)
+        _Ainf=value 
+    End Set
+End Property
+
+Private _R0 as Double =0.1
+Public Property R0 As Type
+    Get
+        Return _R0
+    End Get
+    Set(value As Double)
+        _R0= value
+    End Set
+End Property
+
+Private _Rinf as Double=0.7
+Public Property Rinf As Double
+    Get
+        Return _Rinf
+    End Get
+    Set(value As Double)
+        _Rinf=value
+    End Set
+End Property
+
+Private N as integer =0
+Private D as integer =0
+
+Private W0 as Double[]
+Private Winf as Double[]
+Private A as Double[]
+Private R as Double[] 
+Private Fit as Double[]
+Private fitnessValue as Double
+Private Fmin as Double
+Private Fitinn as Double
+Private Iindex as Integer
+
+Private Best as Double[]
+
+Private W as Double[,]
+Private V as Double[,] 
+
 #End Region
 
 
     Public Overrides Sub RunEpoch()
-        Throw New NotImplementedException()
+        If CurrentIteration = 1 Then
+            InitializeOptimizer()
+        End If
+
+
     End Sub
 
+   
+
     Public Overrides Sub InitializeOptimizer()
-     
+     if SearchIntervals.Count<Dimensions_D Then throw new Exception("Search space intervals must be equal search space dimension.")
+
+        _BestChart = New List(Of Double)
+        _MeanChart = New List(Of Double)
+        _WorstChart = New List(Of Double)
+
+        D = Dimensions_D - 1
+        N = PopulationSize_N - 1
+        W0=new Double[D]{}
+        Winf=new Double[D]{}
+        A = new Double[N]{}
+        R= new Double[N]{}
+        Fit= new Double[N]{}
+        W=new Double[N,D]{}
+        V=new Double[N,D]{}
+
+        For j as Integer = 0 to D
+            W0[j]=(SearchIntervals[j].Max_Value-SearchIntervals[j].Min_Value)/4
+            Winf[j]=W0[j]/100
+        Next    
+
+        For i as integer = 0 to N
+            A[i]=A0
+            R[i]=R0
+        Next        
+       
+        'Inintilize population
+         InitializePopulation()
+
+        For i As Integer = 0 To N
+            fitnessValue = Double.NaN
+            ComputeObjectiveFunction(Population(i), fitnessValue)
+            Fit(i)=fitnessValue
+
+            For j As Integer = 0 To D
+                W[i,j]=W0
+                V[i,j]=0
+            Next                 
+        Next
+         
+        Fmin=Fit.Min()
+        Iindex =Fit.IndexOf(Fmin)
+        Fitinn=Fmin
+        Best=Population(Iindex)
     End Sub
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)

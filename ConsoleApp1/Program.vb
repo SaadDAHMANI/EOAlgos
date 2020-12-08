@@ -25,13 +25,12 @@ Module Program
         Intervals = New List(Of Interval)
 
         For i = 0 To (D - 1)
-            Intervals.Add(New Interval(-120, 10))
+            Intervals.Add(New Interval(-120, 120))
         Next
 
         TestGSA(N, D, Intervals)
 
         Console.WriteLine("____________________________________________________")
-
         TestGWO(N, D, Intervals)
 
         Console.WriteLine("____________________________________________________")
@@ -47,7 +46,7 @@ Module Program
 
         Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 5)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
 
         'initialize algo
 
@@ -78,7 +77,7 @@ Module Program
 
         Optimizer = New GWO_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
 
         'initialize algo
 
@@ -106,7 +105,7 @@ Module Program
 
         Optimizer = New DBA_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
 
         'initialize algo
 

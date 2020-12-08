@@ -13,9 +13,10 @@
          End Get
     End Property
 
+    Private _BestSolution As Double()
     Public Overrides ReadOnly Property BestSolution As Double()
         Get
-            Throw New NotImplementedException()
+            Return _BestSolution
         End Get
     End Property
 
@@ -106,15 +107,16 @@ Private D as integer =0
     Private Fit As Double()
     Private fitnessValue as Double
 Private Fmin as Double
-Private Fitinn as Double
-Private Iindex as Integer
+    Private Fitinn As Double()
+    Private Iindex As Integer
+    Private Fnew As Double()
 
-Private ii as Integer = 0
+    Private ii as Integer = 0
     Private Best As Double()
     Private q as Double =2
-
     Private W As Double(,)
     Private V As Double(,)
+    Private X2 As Double()
 
 #End Region
 
@@ -135,25 +137,72 @@ Private ii as Integer = 0
             q = 2
 
             If Fit(ii) < Fit(i) Then
-                For j As Integer = 0 To D
+                For j = 0 To D
                     V(i, j) = (Population(ii)(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q + (Best(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q
+                Next
+            Else
+                For j = 0 To D
+                    V(i, j) = (Best(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q
                 Next
             End If
 
+            For j = 0 To D
+                X2(j) = Population(i)(j) + V(i, j)
+            Next
 
+            If RandomGenerator.NextDouble() > R(i) Then
+                For j = 0 To D
+                    'Equation 9 :
+                    X2(j) = Population(i)(j) + (W(i, j) * A.Average() * RandomGenerator.Next(-1, 2) * RandomGenerator.NextDouble())
 
+                    'Equation 10:
+                    W(i, j) = ((W0(j) - Winf(j)) / (1 - MaxIterations)) * (CurrentIteration - MaxIterations) + Winf(j)
+                Next
+            End If
 
+            For j = 0 To D
+                If X2(j) < SearchIntervals(j).Min_Value Then
+                    V(i, j) = -1 * V(i, j)
+                    X2(j) = SearchIntervals(j).Min_Value
+                End If
 
+                If X2(j) > SearchIntervals(j).Max_Value Then
+                    V(i, j) = -1 * V(i, j)
+                    X2(j) = SearchIntervals(j).Max_Value
+                End If
+            Next
 
+            fitnessValue = Double.NaN
+            ComputeObjectiveFunction(X2, fitnessValue)
+            Fnew(i) = fitnessValue
 
+            If (Fnew(i) < Fit(i)) AndAlso (RandomGenerator.NextDouble() < A(i)) Then
+
+                For j = 0 To D
+                    Population(i)(j) = X2(j)
+                Next
+                Fit(i) = Fnew(i)
+
+                'Equation 13:
+                R(i) = ((R0 - Rinf) / (1 - MaxIterations)) * (CurrentIteration - MaxIterations) + Rinf
+
+                'Equation 14:
+                A(i) = ((A0 - Ainf) / (1 - MaxIterations)) * (CurrentIteration - MaxIterations) + Ainf
+            End If
+
+            If Fnew(i) <= Fmin Then
+                Fmin = Fnew(i)
+                For j = 0 To D
+                    Best(j) = X2(j)
+                Next
+            End If
         Next
-        
-
-
-
+        _BestChart.Add(Fmin)
+        _CurrentBestFitness = Fmin
+        _BestSolution = Best
     End Sub
 
-   
+
 
     Public Overrides Sub InitializeOptimizer()
      if SearchIntervals.Count<Dimensions_D Then throw new Exception("Search space intervals must be equal search space dimension.")
@@ -169,8 +218,10 @@ Private ii as Integer = 0
         A = New Double(N) {}
         R = New Double(N) {}
         Fit = New Double(N) {}
+        X2 = New Double(D) {}
         W = New Double(N, D) {}
         V = New Double(N, D) {}
+        Fnew = New Double(N) {}
 
         For j as Integer = 0 to D
             W0(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) / 4
@@ -198,8 +249,8 @@ Private ii as Integer = 0
          
         Fmin=Fit.Min()
         Iindex = Array.IndexOf(Fit, Fmin)
-        Fitinn =Fmin
-        Best=Population(Iindex)
+        _BestChart.Add(Fmin)
+        Best = Population(Iindex)
     End Sub
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)

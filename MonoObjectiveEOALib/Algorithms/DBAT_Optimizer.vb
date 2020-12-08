@@ -104,7 +104,9 @@ Private Fmin as Double
 Private Fitinn as Double
 Private Iindex as Integer
 
+Private ii as Integer = 0
 Private Best as Double[]
+Private q as Double =2
 
 Private W as Double[,]
 Private V as Double[,] 
@@ -112,10 +114,35 @@ Private V as Double[,]
 #End Region
 
 
-    Public Overrides Sub RunEpoch()
-        If CurrentIteration = 1 Then
-            InitializeOptimizer()
-        End If
+Public Overrides Sub RunEpoch()
+    If CurrentIteration = 1 Then
+        InitializeOptimizer()
+    End If
+
+    For i As Integer = 0 To N
+        
+        ii=RandomGenerator.Next(0, (N+1))
+        While ii=i
+        ii=RandomGenerator.Next(0, (N+1))
+        Next
+        
+        q=2
+
+        If Fit(ii)<Fit(i) Then
+            For j as Integer=0 to D
+            V[i,j]=(Population(ii)(j)-Population(i)(j))*RandomGenerator.NextDouble()*q+ (Best[j]-Population(i)(j))*RandomGenerator.NextDouble()*q
+            Next
+        End if
+
+
+
+
+
+
+            
+        Next
+        
+
 
 
     End Sub
@@ -170,6 +197,6 @@ Private V as Double[,]
     End Sub
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
-        Throw New NotImplementedException()
+       MyBase.OnObjectiveFunction(positions, fitnessValue)
     End Sub
 End Class

@@ -94,44 +94,45 @@ End Property
 Private N as integer =0
 Private D as integer =0
 
-Private W0 as Double[]
-Private Winf as Double[]
-Private A as Double[]
-Private R as Double[] 
-Private Fit as Double[]
-Private fitnessValue as Double
+    Private W0 As Double()
+    Private Winf As Double()
+    Private A As Double()
+    Private R As Double()
+    Private Fit As Double()
+    Private fitnessValue as Double
 Private Fmin as Double
 Private Fitinn as Double
 Private Iindex as Integer
 
 Private ii as Integer = 0
-Private Best as Double[]
-Private q as Double =2
+    Private Best As Double()
+    Private q as Double =2
 
-Private W as Double[,]
-Private V as Double[,] 
+    Private W As Double(,)
+    Private V As Double(,)
 
 #End Region
 
 
-Public Overrides Sub RunEpoch()
+    Public Overrides Sub RunEpoch()
     If CurrentIteration = 1 Then
         InitializeOptimizer()
     End If
 
     For i As Integer = 0 To N
-        
-        ii=RandomGenerator.Next(0, (N+1))
-        While ii=i
-        ii=RandomGenerator.Next(0, (N+1))
-        Next
-        
-        q=2
 
-        If Fit(ii)<Fit(i) Then
+            ii = RandomGenerator.Next(0, (N + 1))
+
+            While (ii = i)
+                ii = RandomGenerator.Next(0, (N + 1))
+            End While
+
+            q = 2
+
+            If Fit(ii)<Fit(i) Then
             For j as Integer=0 to D
-            V[i,j]=(Population(ii)(j)-Population(i)(j))*RandomGenerator.NextDouble()*q+ (Best[j]-Population(i)(j))*RandomGenerator.NextDouble()*q
-            Next
+                    V(i, j) = (Population(ii)(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q + (Best(j) - Population(i)(j)) * RandomGenerator.NextDouble() * q
+                Next
         End if
 
 

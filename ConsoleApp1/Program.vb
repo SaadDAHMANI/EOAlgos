@@ -18,7 +18,7 @@ Module Program
         'initialisation of search agents count 
         N = 40
 
-        Kmax = 700
+        Kmax = 1000
 
         'initialize search space intevalls
 

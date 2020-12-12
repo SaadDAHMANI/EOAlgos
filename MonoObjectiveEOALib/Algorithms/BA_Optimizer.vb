@@ -66,6 +66,83 @@ Public Class BA_Optimizer
             Return _CurrentBestFitness
         End Get
     End Property
+
+#Region "BA_params"
+    Public Property R0_Param As Double
+        Get
+            Return R0
+        End Get
+        Set(value As Double)
+            If (value >= 0) AndAlso (value <= 1) Then
+                R0 = value
+            Else
+                R0 = 0.1
+                Throw New Exception("R0 must in [0, 1].")
+            End If
+        End Set
+    End Property
+
+    Public Property A0_Param As Double
+        Get
+            Return A0
+        End Get
+        Set(value As Double)
+            If (value >= 0) AndAlso (value <= 2) Then
+                A0 = value
+            Else
+                A0 = 0.9
+                Throw New Exception("A0 must in [0, 2].")
+            End If
+        End Set
+    End Property
+
+    Public Property Alpha_Param As Double
+        Get
+            Return Alpha
+        End Get
+        Set(value As Double)
+            If (value > 0) AndAlso (value < 1) Then
+                Alpha = value
+            Else
+                Alpha = 0.9
+                Throw New Exception("Alpha must in ]0, 1[.")
+            End If
+        End Set
+    End Property
+
+    Public Property Gamma_Param As Double
+        Get
+            Return Gamma
+        End Get
+        Set(value As Double)
+            If value > 0 Then
+                Gamma = value
+            Else
+                Gamma = 0.1R
+                Throw New Exception("Gamma must be >0.")
+            End If
+        End Set
+    End Property
+
+    Public Property Fmin_Param As Double
+        Get
+            Return Fmin
+        End Get
+        Set(value As Double)
+            Fmin = value
+        End Set
+    End Property
+
+    Public Property Fmax_Param As Double
+        Get
+            Return Fmax
+        End Get
+        Set(value As Double)
+            Fmax = value
+        End Set
+    End Property
+#End Region
+
 #Region "BA variables"
     Private N, D, Iindex As Integer
     Private fitnessValue, fitnessNew As Double

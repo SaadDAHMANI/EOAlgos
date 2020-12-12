@@ -195,6 +195,7 @@ Public MustInherit Class EvolutionaryAlgoBase
         End Select
     End Sub
 
+
     Public Event OptimizationStarting(sender As Object, e As EventArgs)
     Public Event OptimizationTerminated(sender As Object, e As EventArgs)
     Public Event ObjectiveFunction(positions() As Double, ByRef fitnessValue As Double) Implements IEvolutionaryAlgo.ObjectiveFunction

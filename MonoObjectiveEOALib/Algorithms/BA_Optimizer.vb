@@ -163,6 +163,7 @@ Public Class BA_Optimizer
     Private R0 As Double = 0.1 'initial pulse emission rate
     Private A0 As Double = 0.9 'initial loudness
     Private eps As Double
+    Private fitness_min As Double
 
     Private A As Double() 'loudness for each BAT
     Private R As Double() 'pulse emission rate for each BAT
@@ -183,28 +184,27 @@ Public Class BA_Optimizer
             F(i) = Fmin + ((Fmax - Fmin) * RandomGenerator.NextDouble())  'randomly chose the frequency
 
             For j = 0 To D
-                V(i, j) = V(i, j) + (Population(i)(j) - BestSol(j) * F(i)) 'update the velocity
-            Next
-
-            For j = 0 To D
+                V(i, j) = V(i, j) + ((Population(i)(j) - BestSol(j)) * F(i)) 'update the velocity
                 Population(i)(j) = Population(i)(j) + V(i, j) 'update the BAT position
             Next
 
             'Apply simple bounds/limits
+            'Space_Bound()
+
             For j = 0 To D
                 If Population(i)(j) < SearchIntervals(j).Min_Value Then
-                    Population(i)(j) = SearchIntervals(j).Min_Value
+                    Population(i)(j) = SearchIntervals(j).Min_Value '(SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
                 End If
 
                 If Population(i)(j) > SearchIntervals(j).Max_Value Then
-                    Population(i)(j) = SearchIntervals(j).Max_Value
+                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
                 End If
             Next
 
             'Check the condition with R
 
             If RandomGenerator.NextDouble() > R(i) Then
-                eps = -1 + 2 * RandomGenerator.NextDouble()
+                eps = -1 + (2 * RandomGenerator.NextDouble())
                 For j = 0 To D
                     Population(i)(j) = BestSol(j) + (eps * A.Average())
                 Next
@@ -219,17 +219,17 @@ Public Class BA_Optimizer
             If (fitnessNew <= Fitness(i)) AndAlso (RandomGenerator.NextDouble() < A(i)) Then
                 Fitness(i) = fitnessNew
                 A(i) = Alpha * A(i)
-                R(i) = R0 * (1 - Math.Exp(-1 * Gamma * CurrentIteration))
+                R(i) = R0 * (1 - Math.Exp((-1 * Gamma * CurrentIteration)))
             End If
 
-            If (fitnessNew <= Fmin) Then
+            If (fitnessNew <= fitness_min) Then
                 BestSol = Population(i)
-                Fmin = fitnessNew
+                fitness_min = fitnessNew
             End If
         Next
 
-        _BestChart.Add(Fmin)
-        _CurrentBestFitness = Fmin
+        _BestChart.Add(fitness_min)
+        _CurrentBestFitness = fitness_min
         _BestSolution = BestSol
     End Sub
 
@@ -257,17 +257,73 @@ Public Class BA_Optimizer
 
         ' Compute fitnesses
         For i As Integer = 0 To N
-            fitnessValue = Double.NaN
+            'fitnessValue = Double.NaN
             ComputeObjectiveFunction(Population(i), fitnessValue)
             Fitness(i) = fitnessValue
         Next
 
-        Fmin = Fitness.Min()
-        Iindex = Array.IndexOf(Fitness, Fmin)
-        _BestChart.Add(Fmin)
+        fitness_min = Fitness.Min()
+        Iindex = Array.IndexOf(Fitness, fitness_min)
+        _BestChart.Add(fitness_min)
         BestSol = Population(Iindex)
 
     End Sub
+
+
+    Public Sub Space_Bound()
+        'from matlab site :
+        'https://www.mathworks.com/matlabcentral/answers/311735-hi-i-try-to-convert-this-matlab-code-to-vb-net-or-c-codes-help-me-please
+
+        'Dim rand As New Random()
+
+        Dim Tp(D) As Int32
+        Dim Tm(D) As Int32
+        Dim TpTildeTm(D) As Int32
+        Dim value As Integer
+        Dim TmpArray(D) As Double
+        Dim randiDimm(D) As Double
+
+        For i As Integer = 0 To N
+
+            For j As Integer = 0 To D
+                If Population(i)(j) > SearchIntervals.Item(j).Max_Value Then
+                    Tp(j) = 1I
+                Else
+                    Tp(j) = 0I
+                End If
+
+                If Population(i)(j) < SearchIntervals.Item(j).Min_Value Then
+                    Tm(j) = 1I
+                Else
+                    Tm(j) = 0I
+                End If
+
+                value = Tp(j) + Tm(j)
+
+                If value = 0 Then
+                    TpTildeTm(j) = 1I
+                Else
+                    TpTildeTm(j) = 0I
+                End If
+            Next
+
+            '------------------------------------
+            For j As Integer = 0 To D
+                TmpArray(j) = Population(i)(j) * TpTildeTm(j)
+            Next
+            '-----------------------------------
+            For t = 0 To D
+                randiDimm(t) = (((SearchIntervals.Item(t).Max_Value - SearchIntervals.Item(t).Min_Value) * RandomGenerator.NextDouble()) + SearchIntervals.Item(t).Min_Value) * (Tp(t) + Tm(t))
+
+            Next
+
+            For t = 0 To D
+                Population(i)(t) = TmpArray(t) + randiDimm(t)
+            Next
+        Next
+
+    End Sub
+
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitness_Value As Double)
         MyBase.OnObjectiveFunction(positions, fitness_Value)

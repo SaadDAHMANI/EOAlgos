@@ -16,13 +16,13 @@ Public Class BA_Optimizer
     Inherits EvolutionaryAlgoBase
     Public Overrides ReadOnly Property AlgorithmName As Object
         Get
-            Throw New NotImplementedException()
+            Return "BA"
         End Get
     End Property
 
     Public Overrides ReadOnly Property AlgorithmFullName As Object
         Get
-            Throw New NotImplementedException()
+            Return "Bat Algorithm"
         End Get
     End Property
 

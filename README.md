@@ -30,4 +30,7 @@ Improved GWO, by : DOI 10.1007/s00521-016-2357-x
 
 >### 6. AdaptiveGWO
  Developed by : by : http://dx.doi.org/10.1080/23311916.2016.1256083
+ 
+>### 7. Directional Bat Algorithm
+
 

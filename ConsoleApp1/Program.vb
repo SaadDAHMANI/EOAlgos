@@ -39,6 +39,10 @@ Module Program
 
         Console.WriteLine("____________________________________________________")
 
+        TestBA(N, D, Intervals)
+
+        Console.WriteLine("____________________________________________________")
+
 
     End Sub
 
@@ -46,7 +50,7 @@ Module Program
 
         Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 5)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         'initialize algo
 
@@ -76,7 +80,7 @@ Module Program
 
         Optimizer = New GWO_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         'initialize algo
 
@@ -103,7 +107,34 @@ Module Program
 
         Optimizer = New DBA_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+
+        'initialize algo
+
+        With Optimizer
+            .MaxIterations = Kmax
+            .OptimizationType = OptimizationTypeEnum.Minimization
+            .LuanchComputation()
+        End With
+
+        Console.WriteLine("The best solution with {0} is : ", Optimizer.AlgorithmName)
+        For i = 0 To (D - 1)
+            Console.WriteLine(Optimizer.BestSolution(i))
+        Next
+
+        'Write the best score for algo :
+        Console.WriteLine(String.Format("{0} best score is : {1}", Optimizer.AlgorithmName, Optimizer.BestScore))
+
+        Console.WriteLine("{0} - Comutation time = {1} MS", Optimizer.AlgorithmName, Optimizer.ComputationTime)
+
+        Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmName)
+    End Sub
+
+    Private Sub TestBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+
+        Optimizer = New BA_Optimizer(N, D, LUBounds)
+
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         'initialize algo
 

@@ -72,7 +72,6 @@ Module Program
 
     End Sub
 
-
     Private Sub TestGWO(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
         Optimizer = New GWO_Optimizer(N, D, LUBounds)
@@ -99,7 +98,6 @@ Module Program
 
         Console.WriteLine("End computation by {0}.", Optimizer.AlgorithmName)
     End Sub
-
 
     Private Sub TestDBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 

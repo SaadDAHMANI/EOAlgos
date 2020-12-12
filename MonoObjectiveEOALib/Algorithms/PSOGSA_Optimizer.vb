@@ -64,7 +64,7 @@ Public Class PSOGSA_Optimizer
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
+    Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitness_Value As Double)
         Throw New NotImplementedException()
     End Sub
     Public Sub New()

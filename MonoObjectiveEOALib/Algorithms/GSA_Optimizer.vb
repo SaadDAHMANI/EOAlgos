@@ -521,8 +521,8 @@ Public Class GSA_Optimizer
 
     End Sub
 
-    Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitnessValue As Double)
-        MyBase.OnObjectiveFunction(positions, fitnessValue)
+    Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitness_Value As Double)
+        MyBase.OnObjectiveFunction(positions, fitness_Value)
     End Sub
 
 

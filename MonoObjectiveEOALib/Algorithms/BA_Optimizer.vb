@@ -21,7 +21,7 @@ Public Class BA_Optimizer
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
         SearchIntervals = searchSpaceIntervals
-        InitializePopulation()
+        'InitializePopulation()
     End Sub
 
     Public Overrides ReadOnly Property AlgorithmName As Object
@@ -184,7 +184,7 @@ Public Class BA_Optimizer
             F(i) = Fmin + ((Fmax - Fmin) * RandomGenerator.NextDouble())  'randomly chose the frequency
 
             For j = 0 To D
-                V(i, j) = V(i, j) + ((Population(i)(j) - BestSol(j)) * F(i)) 'update the velocity
+                V(i, j) = V(i, j) + ((BestSol(j) - Population(i)(j)) * F(i)) 'update the velocity
                 Population(i)(j) = Population(i)(j) + V(i, j) 'update the BAT position
             Next
 
@@ -197,11 +197,11 @@ Public Class BA_Optimizer
                 End If
 
                 If Population(i)(j) > SearchIntervals(j).Max_Value Then
-                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
+                    Population(i)(j) = SearchIntervals(j).Max_Value '(SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
                 End If
             Next
 
-            'Check the condition with R
+            '' Check the condition with R
 
             If RandomGenerator.NextDouble() > R(i) Then
                 eps = -1 + (2 * RandomGenerator.NextDouble())

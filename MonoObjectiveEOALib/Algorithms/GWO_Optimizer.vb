@@ -200,9 +200,7 @@ Public Class GWO_Optimizer
 
     Private Sub RunEpoch_Minimization()
         Try
-            If CurrentIteration = 1 Then
-                InitializeOptimizer()
-            End If
+
 
             '---------------------------------
             worstFitness = Double.MinValue

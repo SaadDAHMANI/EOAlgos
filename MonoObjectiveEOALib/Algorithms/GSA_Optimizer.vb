@@ -125,9 +125,6 @@ Public Class GSA_Optimizer
     End Sub
 
     Public Overrides Sub RunEpoch()
-        If CurrentIteration = 1 Then
-            InitializeOptimizer()
-        End If
 
         '0: Checking allowable range :
         Space_Bound()

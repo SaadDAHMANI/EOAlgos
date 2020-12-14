@@ -134,12 +134,17 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public Overridable Sub LuanchComputation() Implements IEvolutionaryAlgo.LuanchComputation
 
         RaiseEvent OptimizationStarting(Me, New EventArgs)
+
+
         If Object.Equals(Chronos, Nothing) Then
             Chronos = New Stopwatch()
             Chronos.Start()
         Else
             Chronos.Restart()
         End If
+
+        ''Initialize the optimizer
+        InitializeOptimizer()
 
         _CurrentIteration = 1
 
@@ -176,22 +181,15 @@ Public MustInherit Class EvolutionaryAlgoBase
 
                 Population = New Double((populationSizeN - 1))() {}
 
-                Try
+                For i As Integer = 0 To (populationSizeN - 1)
+                    Dim X = New Double((dimensionD - 1)) {}
 
-                    For i As Integer = 0 To (populationSizeN - 1)
-                        Dim X = New Double((dimensionD - 1)) {}
-
-                        For j = 0 To (dimensionD - 1)
-                            X(j) = (Intervals.Item(j).Max_Value - Intervals.Item(j).Min_Value) * RandomGenerator.NextDouble() + Intervals.Item(j).Min_Value
-                        Next
-
-                        Population(i) = X
+                    For j = 0 To (dimensionD - 1)
+                        X(j) = (Intervals.Item(j).Max_Value - Intervals.Item(j).Min_Value) * RandomGenerator.NextDouble() + Intervals.Item(j).Min_Value
                     Next
 
-                Catch ex As Exception
-                    Throw ex
-                End Try
-
+                    Population(i) = X
+                Next
         End Select
     End Sub
 

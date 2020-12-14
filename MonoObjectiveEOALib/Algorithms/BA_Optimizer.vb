@@ -176,10 +176,6 @@ Public Class BA_Optimizer
 #End Region
     Public Overrides Sub RunEpoch()
 
-        If CurrentIteration = 1 Then
-            InitializeOptimizer()
-        End If
-
         For i = 0 To N
             F(i) = Fmin + ((Fmax - Fmin) * RandomGenerator.NextDouble())  'randomly chose the frequency
 

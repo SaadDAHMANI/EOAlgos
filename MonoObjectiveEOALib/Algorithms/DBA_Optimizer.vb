@@ -130,9 +130,6 @@
 
 
     Public Overrides Sub RunEpoch()
-        If CurrentIteration = 1 Then
-            InitializeOptimizer()
-        End If
 
         For i As Integer = 0 To N
 

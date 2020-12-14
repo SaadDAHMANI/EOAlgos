@@ -28,14 +28,14 @@ Module Program
             Intervals.Add(New Interval(-120, 120))
         Next
 
-        TestGSA(N, D, Intervals)
+        '  TestGSA(N, D, Intervals)
 
         Console.WriteLine("____________________________________________________")
-        TestGWO(N, D, Intervals)
+        '  TestGWO(N, D, Intervals)
 
         Console.WriteLine("____________________________________________________")
 
-        TestDBA(N, D, Intervals)
+        '  TestDBA(N, D, Intervals)
 
         Console.WriteLine("____________________________________________________")
 

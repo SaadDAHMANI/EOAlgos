@@ -283,25 +283,17 @@ Public Class GSA_Optimizer
     ''' </summary>
     ''' <param name="fitnessArray">Fitness array of Agents X(N,D)</param>
     Private Sub EvaluateFitness(ByRef fitnessArray() As Double)
-        Try
-            For i = 0 To N
-                fitnessValue = Double.NaN
-                ComputeObjectiveFunction(Population(i), fitnessValue)
-                fitnessArray(i) = fitnessValue
-            Next
-        Catch ex As Exception
-            Throw ex
-        End Try
+        For i = 0 To N
+            fitnessValue = Double.NaN
+            ComputeObjectiveFunction(Population(i), fitnessValue)
+            fitnessArray(i) = fitnessValue
+        Next
     End Sub
 
     Private Sub GetBestLine(ByRef Xx As Double()(), lbest() As Double, ByVal best_x As Integer)
-        Try
-            For i As Integer = 0 To Me.D
-                lbest(i) = Xx(best_x)(i)
-            Next
-        Catch ex As Exception
-            Throw ex
-        End Try
+        For i As Integer = 0 To Me.D
+            lbest(i) = Xx(best_x)(i)
+        Next
     End Sub
 
 

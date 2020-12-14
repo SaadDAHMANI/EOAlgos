@@ -177,16 +177,30 @@ Public Class BA_Optimizer
     Public Overrides Sub RunEpoch()
 
         For i = 0 To N
+            'Update emission rate
+            R(i) = R0 * (1 - Math.Exp((-1 * Gamma * CurrentIteration)))
+
+            'Update loundness
+            A(i) = Alpha * A(i)
+
+            'For j = 0 To D
             F(i) = Fmin + ((Fmax - Fmin) * RandomGenerator.NextDouble())  'randomly chose the frequency
+            'Next
 
             For j = 0 To D
-                V(i, j) = V(i, j) + ((BestSol(j) - Population(i)(j)) * F(i)) 'update the velocity
+                V(i, j) = V(i, j) + ((Population(i)(j) - BestSol(j)) * F(i)) 'update the velocity
                 Population(i)(j) = Population(i)(j) + V(i, j) 'update the BAT position
             Next
 
-            'Apply simple bounds/limits
-            'Space_Bound()
+            '' Check the condition with R
+            If RandomGenerator.NextDouble() < R(i) Then
+                eps = 0.1 '-1 + (2 * RandomGenerator.NextDouble())
+                For j = 0 To D
+                    Population(i)(j) = BestSol(j) + (eps * RandomGenerator.NextDouble() * A.Average())
+                Next
+            End If
 
+            'Apply simple bounds/limits
             For j = 0 To D
                 If Population(i)(j) < SearchIntervals(j).Min_Value Then
                     Population(i)(j) = SearchIntervals(j).Min_Value '(SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
@@ -197,31 +211,19 @@ Public Class BA_Optimizer
                 End If
             Next
 
-            '' Check the condition with R
-
-            If RandomGenerator.NextDouble() > R(i) Then
-                eps = -1 + (2 * RandomGenerator.NextDouble())
-                For j = 0 To D
-                    Population(i)(j) = BestSol(j) + (eps * A.Average())
-                Next
-            End If
-
             'Calculate the objective function
             fitnessValue = Double.NaN
             ComputeObjectiveFunction(Population(i), fitnessValue)
             fitnessNew = fitnessValue
 
             'Update if the solution improves, or not too loud
-            If (fitnessNew <= Fitness(i)) AndAlso (RandomGenerator.NextDouble() < A(i)) Then
-                Fitness(i) = fitnessNew
-                A(i) = Alpha * A(i)
-                R(i) = R0 * (1 - Math.Exp((-1 * Gamma * CurrentIteration)))
-            End If
-
-            If (fitnessNew <= fitness_min) Then
+            If (fitnessNew < fitness_min) AndAlso (RandomGenerator.NextDouble() > A(i)) Then
                 BestSol = Population(i)
                 fitness_min = fitnessNew
+                'A(i) = Alpha * A(i)
+                'R(i) = R0 * (1 - Math.Exp((-1 * Gamma * CurrentIteration)))
             End If
+
         Next
 
         _BestChart.Add(fitness_min)

@@ -44,10 +44,6 @@ Public Class PSOGSA_Optimizer
         C2 = C_2
     End Sub
 
-
-
-
-
     Public Overrides ReadOnly Property AlgorithmName As Object
         Get
             Return "PSOGSA"
@@ -104,15 +100,28 @@ Public Class PSOGSA_Optimizer
 
         G = G0 * Math.Exp((-1 * Alpha * (CurrentIteration - 1)) / MaxIterations)
 
+        'For i = 0 To N
+        '    mass(i) = 0
+        '    For j = 0 To D
+        '        force(i, j) = 0
+        '        acceleration(i, j) = 0
+        '    Next
+        'Next
+
+        'Space_Bound(Population)
+
+        'Apply simple bounds/limits
         For i = 0 To N
-            mass(i) = 0
             For j = 0 To D
-                force(i, j) = 0
-                acceleration(i, j) = 0
+                If Population(i)(j) < SearchIntervals(j).Min_Value Then
+                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
+                End If
+
+                If Population(i)(j) > SearchIntervals(j).Max_Value Then
+                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
+                End If
             Next
         Next
-
-        Space_Bound(Population)
 
         For i = 0 To N
 
@@ -244,7 +253,7 @@ Public Class PSOGSA_Optimizer
         current_fitness = New Double(N) {}
 
         If OptimizationType = OptimizationTypeEnum.Minimization Then
-            gBestScore = Double.MinValue
+            gBestScore = Double.MaxValue
         Else
             gBestScore = Double.MinValue
         End If

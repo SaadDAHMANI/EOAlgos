@@ -7,7 +7,7 @@
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
         SearchIntervals = searchSpaceIntervals
-        InitializePopulation()
+        'InitializePopulation()
     End Sub
     Public Overrides ReadOnly Property AlgorithmName As Object
         Get
@@ -206,8 +206,6 @@
         _CurrentBestFitness = Fmin
         _BestSolution = Best
     End Sub
-
-
 
     Public Overrides Sub InitializeOptimizer()
         If SearchIntervals.Count < Dimensions_D Then Throw New Exception("Search space intervals must be equal search space dimension.")

@@ -105,7 +105,7 @@ Module Program
 
     Private Sub TestPSOGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
-        Optimizer = New PSOGSA_Optimizer(N, D, LUBounds, Kmax, 1, 25, 1.5, 1.5)
+        Optimizer = New PSOGSA_Optimizer(N, D, LUBounds)
 
         AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 

@@ -16,7 +16,7 @@ Module Program
         D = 5
 
         'initialisation of search agents count 
-        N = 50
+        N = 30
 
         Kmax = 1000
 
@@ -25,22 +25,22 @@ Module Program
         Intervals = New List(Of Interval)
 
         For i = 0 To (D - 1)
-            Intervals.Add(New Interval(-120, 120))
+            Intervals.Add(New Interval(10, 100))
         Next
 
-        TestGSA(N, D, Intervals)
+        'TestGSA(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
 
         TestPSOGSA(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
 
-        TestGWO(N, D, Intervals)
+        'TestGWO(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
 
-        TestDBA(N, D, Intervals)
+        'TestDBA(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
 
-        TestBA(N, D, Intervals)
+        'TestBA(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
 
 
@@ -107,7 +107,7 @@ Module Program
 
         Optimizer = New PSOGSA_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
 
         'initialize algo
 

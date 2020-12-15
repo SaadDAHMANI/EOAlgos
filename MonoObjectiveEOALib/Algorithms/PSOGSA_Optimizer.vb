@@ -100,17 +100,17 @@ Public Class PSOGSA_Optimizer
 
         G = G0 * Math.Exp((-1 * Alpha * (CurrentIteration - 1)) / MaxIterations)
 
-        'For i = 0 To N
-        '    mass(i) = 0
-        '    For j = 0 To D
-        '        force(i, j) = 0
-        '        acceleration(i, j) = 0
-        '    Next
-        'Next
+        For i = 0 To N
+            mass(i) = 0
+            For j = 0 To D
+                force(i, j) = 0
+                acceleration(i, j) = 0
+            Next
+        Next
 
         'Space_Bound(Population)
 
-        'Apply simple bounds/limits
+        '' simple bounds/limits
         For i = 0 To N
             For j = 0 To D
                 If Population(i)(j) < SearchIntervals(j).Min_Value Then
@@ -139,7 +139,10 @@ Public Class PSOGSA_Optimizer
 
             If (gBestScore > fitness) Then
                 gBestScore = fitness
-                gBest = Population(i)
+                For j = 0 To D
+                    gBest(j) = Population(i)(j)
+                Next
+
             End If
         Next
 
@@ -161,7 +164,7 @@ Public Class PSOGSA_Optimizer
         Next
 
         For i = 0 To N
-            mass(i) = (mass(i) * 5) / mass.Sum
+            mass(i) = (mass(i) * 5) / mass.Sum()
         Next
 
         ''Force update
@@ -286,9 +289,13 @@ Public Class PSOGSA_Optimizer
         velocity = New Double(N, D) {}
         For i = 0 To N
             For j = 0 To D
-                velocity(i, j) = 0.3 * RandomGenerator.NextDouble() * RandomGenerator.Next(-1, 2)
+                While (velocity(i, j) = 0)
+                    velocity(i, j) = 0.3 * RandomGenerator.NextDouble() * RandomGenerator.Next(-1, 2)
+                End While
             Next
         Next
+
+        Dim x = velocity
 
         acceleration = New Double(N, D) {}
         mass = New Double(N) {}

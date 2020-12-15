@@ -16,7 +16,7 @@ Module Program
         D = 5
 
         'initialisation of search agents count 
-        N = 40
+        N = 50
 
         Kmax = 1000
 
@@ -105,13 +105,14 @@ Module Program
 
     Private Sub TestPSOGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
-        Optimizer = New PSOGSA_Optimizer(N, D, LUBounds)
+        Optimizer = New PSOGSA_Optimizer(N, D, LUBounds, Kmax, 1, 25, 1.5, 1.5)
 
         AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         'initialize algo
 
         With Optimizer
+
             .MaxIterations = Kmax
             .OptimizationType = OptimizationTypeEnum.Minimization
             .LuanchComputation()

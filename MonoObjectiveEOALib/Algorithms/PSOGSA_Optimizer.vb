@@ -89,10 +89,9 @@ Public Class PSOGSA_Optimizer
             Throw New NotImplementedException()
         End Get
     End Property
-
     Public Overrides ReadOnly Property CurrentBestFitness As Double
         Get
-            Return best
+            Return gBestScore
         End Get
     End Property
 
@@ -148,19 +147,23 @@ Public Class PSOGSA_Optimizer
 
         best = current_fitness.Min
         worst = current_fitness.Max
-
+        ''_________________________________________________________
         _BestChart.Add(gBestScore)
+        _MeanChart.Add((current_fitness.Sum / N))
+        WorstChart.Add(current_fitness.Max) 'For minimisation only
+        ''CurrentBestFitness = gBestScore
+        ''---------------------------------------------------------
 
-        For pp = 0 To N
-            If current_fitness(pp) = best Then
-                bestIndex = pp
-                Exit For
-            End If
-        Next
+        ''For pp = 0 To N
+        ''    If current_fitness(pp) = best Then
+        ''        bestIndex = pp
+        ''        Exit For
+        ''    End If
+        ''Next
 
         ''Calculate Mass
         For i = 0 To N
-            mass(i) = (current_fitness(i) - 0.99 * worst) / (best - worst)
+            mass(i) = (current_fitness(i) - (0.99 * worst)) / (best - worst)
         Next
 
         For i = 0 To N
@@ -174,7 +177,7 @@ Public Class PSOGSA_Optimizer
                 For k = 0 To N
                     If (Population(k)(j) <> Population(i)(j)) Then
                         ''Equation (3)
-                        force(i, j) = force(i, j) + RandomGenerator.NextDouble() * G * mass(k) * mass(i) * (Population(k)(j) - Population(i)(j)) / Math.Abs(Population(k)(j) - Population(i)(j))
+                        force(i, j) = force(i, j) + ((RandomGenerator.NextDouble() * G * mass(k) * mass(i) * (Population(k)(j) - Population(i)(j))) / Math.Abs(Population(k)(j) - Population(i)(j)))
                     End If
                 Next
             Next
@@ -205,8 +208,6 @@ Public Class PSOGSA_Optimizer
                 Population(i)(j) = Population(i)(j) + velocity(i, j)
             Next
         Next
-
-        ''------------------------------
 
     End Sub
 

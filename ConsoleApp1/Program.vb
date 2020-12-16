@@ -18,14 +18,14 @@ Module Program
         'initialisation of search agents count 
         N = 30
 
-        Kmax = 1000
+        Kmax = 5000
 
         'initialize search space intevalls
 
         Intervals = New List(Of Interval)
 
         For i = 0 To (D - 1)
-            Intervals.Add(New Interval(-0.5, 10))
+            Intervals.Add(New Interval(-15, 15))
         Next
 
         'TestGSA(N, D, Intervals)
@@ -43,9 +43,6 @@ Module Program
 
         'TestBA(N, D, Intervals)
         Console.WriteLine("____________________________________________________")
-
-        Dim g = Math.Exp(1)
-        Console.WriteLine(g)
 
     End Sub
 
@@ -78,7 +75,7 @@ Module Program
 
         Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 5)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
 
         Luanch_ShowOptimizerResults(Optimizer)
 
@@ -98,19 +95,17 @@ Module Program
 
         Optimizer = New PSOGSA_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         Luanch_ShowOptimizerResults(Optimizer)
 
     End Sub
 
-
-
     Private Sub TestDBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
 
         Optimizer = New DBA_Optimizer(N, D, LUBounds)
 
-        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F2
+        AddHandler Optimizer.ObjectiveFunction, AddressOf BenchmarkFunctions.F1
 
         Luanch_ShowOptimizerResults(Optimizer)
 

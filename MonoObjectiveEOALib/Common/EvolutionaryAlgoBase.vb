@@ -23,17 +23,17 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public MustOverride ReadOnly Property AlgorithmName Implements IEvolutionaryAlgo.AlgorithmName
     Public MustOverride ReadOnly Property AlgorithmFullName Implements IEvolutionaryAlgo.AlgorithmFullName
 
-    Dim dimensionD As Integer = 1
+    Dim _Dimensions_D As Integer = 1
     ''' <summary>
     ''' Search Space dimension.
     ''' </summary>
     ''' <returns></returns>
     Public Overridable Property Dimensions_D As Integer Implements IEvolutionaryAlgo.Dimensions_D
         Get
-            Return dimensionD
+            Return _Dimensions_D
         End Get
         Set(value As Integer)
-            dimensionD = Math.Max(value, 1)
+            _Dimensions_D = Math.Max(value, 1)
         End Set
     End Property
 
@@ -166,7 +166,7 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public Overridable Sub InitializePopulation(strategy As SolutionsInitializationStrategyEnum)
 
         'Check intervals count
-        If (Me.Intervals.Count < dimensionD) Then
+        If (Me.Intervals.Count < _Dimensions_D) Then
             Throw New Exception("Search space interval must equal the search space dimension")
         End If
 
@@ -182,12 +182,11 @@ Public MustInherit Class EvolutionaryAlgoBase
                 Population = New Double((populationSizeN - 1))() {}
 
                 For i As Integer = 0 To (populationSizeN - 1)
-                    Dim X = New Double((dimensionD - 1)) {}
+                    Dim X = New Double((_Dimensions_D - 1)) {}
 
-                    For j = 0 To (dimensionD - 1)
+                    For j = 0 To (_Dimensions_D - 1)
                         X(j) = (Intervals.Item(j).Max_Value - Intervals.Item(j).Min_Value) * RandomGenerator.NextDouble() + Intervals.Item(j).Min_Value
                     Next
-
                     Population(i) = X
                 Next
         End Select

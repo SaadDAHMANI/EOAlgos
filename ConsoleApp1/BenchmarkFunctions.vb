@@ -19,7 +19,7 @@ Public Sub F0(positions() As Double, ByRef fitnessValue As Double)
 
         fitnessValue = 0R
         For i = 0 To (positions.Length - 1)
-            fitnessValue += positions(i) ^ 2
+            fitnessValue += Math.Pow(positions(i), 2)
         Next
 
     End Sub
@@ -27,11 +27,15 @@ Public Sub F0(positions() As Double, ByRef fitnessValue As Double)
     Public Sub F2(positions() As Double, ByRef fitnessValue As Double)
 
         fitnessValue = 0R
+        Dim somme As Double = 0
+        Dim produit As Double = 1
         For i = 0 To (positions.Length - 1)
-            fitnessValue += positions(i) ^ 2
+            somme += Math.Abs(positions(i))
+            produit *= Math.Abs(positions(i))
         Next
-        fitnessValue += 10
+        fitnessValue = (somme + produit)
     End Sub
+
 
 
 

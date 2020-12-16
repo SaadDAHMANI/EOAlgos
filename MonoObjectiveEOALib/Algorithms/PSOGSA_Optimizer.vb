@@ -109,23 +109,20 @@ Public Class PSOGSA_Optimizer
 
         'Space_Bound(Population)
 
-        '' simple bounds/limits
         For i = 0 To N
+            '' simple bounds/limits
             For j = 0 To D
                 If Population(i)(j) < SearchIntervals(j).Min_Value Then
-                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
+                    Population(i)(j) = SearchIntervals(j).Min_Value '(SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
                 End If
 
                 If Population(i)(j) > SearchIntervals(j).Max_Value Then
-                    Population(i)(j) = (SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
+                    Population(i)(j) = SearchIntervals(j).Max_Value '(SearchIntervals(j).Max_Value - SearchIntervals(j).Min_Value) * RandomGenerator.NextDouble() + SearchIntervals(j).Min_Value
                 End If
             Next
-        Next
-
-        For i = 0 To N
 
             ''Evaluate the population    
-            fitness = 0
+            fitness = 0R
             ComputeObjectiveFunction(Population(i), fitness)
             current_fitness(i) = fitness
 
@@ -141,7 +138,6 @@ Public Class PSOGSA_Optimizer
                 For j = 0 To D
                     gBest(j) = Population(i)(j)
                 Next
-
             End If
         Next
 
@@ -150,7 +146,7 @@ Public Class PSOGSA_Optimizer
         ''_________________________________________________________
         _BestChart.Add(gBestScore)
         _MeanChart.Add((current_fitness.Sum / N))
-        WorstChart.Add(current_fitness.Max) 'For minimisation only
+        _WorstChart.Add(current_fitness.Max) 'For minimisation only
         ''CurrentBestFitness = gBestScore
         ''---------------------------------------------------------
 
@@ -197,7 +193,7 @@ Public Class PSOGSA_Optimizer
         For i = 0 To N
             For j = 0 To D
                 ''Equation(9)
-                velocity(i, j) = RandomGenerator.NextDouble() * velocity(i, j) + C1 * RandomGenerator.NextDouble() * acceleration(i, j) + C2 * RandomGenerator.NextDouble() * (gBest(j) - Population(i)(j))
+                velocity(i, j) = (RandomGenerator.NextDouble() * velocity(i, j)) + (C1 * RandomGenerator.NextDouble() * acceleration(i, j)) + (C2 * RandomGenerator.NextDouble() * (gBest(j) - Population(i)(j)))
             Next
         Next
 
@@ -251,8 +247,9 @@ Public Class PSOGSA_Optimizer
         _MeanChart = New List(Of Double)
         _WorstChart = New List(Of Double)
 
-        D = Dimensions_D - 1
-        N = PopulationSize_N - 1
+        D = (Dimensions_D - 1)
+        N = (PopulationSize_N - 1)
+
         gBest = New Double(D) {}
         current_fitness = New Double(N) {}
 
@@ -295,8 +292,6 @@ Public Class PSOGSA_Optimizer
                 End While
             Next
         Next
-
-        Dim x = velocity
 
         acceleration = New Double(N, D) {}
         mass = New Double(N) {}

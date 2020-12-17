@@ -52,7 +52,7 @@ Module Program
         With Optimizer
             .MaxIterations = Kmax
             .OptimizationType = OptimizationTypeEnum.Minimization
-            .LuanchComputation()
+            .Compute()
         End With
 
         Console.WriteLine("The best solution with {0} is : ", optimEngine.AlgorithmName)

@@ -131,7 +131,7 @@ Public MustInherit Class EvolutionaryAlgoBase
 
     Public MustOverride Sub RunEpoch() Implements IEvolutionaryAlgo.RunEpoch
     Public MustOverride Sub InitializeOptimizer()
-    Public Overridable Sub LuanchComputation() Implements IEvolutionaryAlgo.LuanchComputation
+    Public Overridable Sub Compute() Implements IEvolutionaryAlgo.Compute
 
         RaiseEvent OptimizationStarting(Me, New EventArgs)
 

@@ -2,7 +2,7 @@
 
     Sub InitializePopulation()
     Sub RunEpoch()
-    Sub LuanchComputation()
+    Sub Compute()
 
     Property Dimensions_D As Integer
     Property PopulationSize_N As Integer

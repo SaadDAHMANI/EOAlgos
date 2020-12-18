@@ -11,7 +11,7 @@ Public MustInherit Class EvolutionaryAlgoBase
     ''' <param name="searchAgentCount"></param>
     ''' <param name="searchSpaceDimension"></param>
     ''' <param name="algoParams"></param>
-    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Interval))
+    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range))
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
         SearchIntervals = searchSpaceIntervals
@@ -37,16 +37,16 @@ Public MustInherit Class EvolutionaryAlgoBase
         End Set
     End Property
 
-    Dim Intervals As List(Of Interval)
+    Dim Intervals As List(Of Range)
     ''' <summary>
     ''' Search space intervals.
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable Property SearchIntervals As List(Of Interval) Implements IEvolutionaryAlgo.SearchIntervals
+    Public Overridable Property SearchIntervals As List(Of Range) Implements IEvolutionaryAlgo.SearchIntervals
         Get
             Return Intervals
         End Get
-        Set(value As List(Of Interval))
+        Set(value As List(Of Range))
             Intervals = value
         End Set
     End Property
@@ -185,7 +185,7 @@ Public MustInherit Class EvolutionaryAlgoBase
                     Dim X = New Double((_Dimensions_D - 1)) {}
 
                     For j = 0 To (_Dimensions_D - 1)
-                        X(j) = (Intervals.Item(j).Max_Value - Intervals.Item(j).Min_Value) * RandomGenerator.NextDouble() + Intervals.Item(j).Min_Value
+                        X(j) = (Intervals.Item(j).Max - Intervals.Item(j).Min) * RandomGenerator.NextDouble() + Intervals.Item(j).Min
                     Next
                     Population(i) = X
                 Next

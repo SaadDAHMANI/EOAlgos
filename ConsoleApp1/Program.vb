@@ -8,7 +8,7 @@ Module Program
     Dim D As Int32
     Dim N As Int32
     Dim Kmax As Int32
-    Dim Intervals As List(Of Interval)
+    Dim Intervals As List(Of MonoObjectiveEOALib.Range)
 
     Sub Main(args As String())
 
@@ -22,10 +22,10 @@ Module Program
 
         'initialize search space intevalls
 
-        Intervals = New List(Of Interval)
+        Intervals = New List(Of MonoObjectiveEOALib.Range)
 
         For i = 0 To (D - 1)
-            Intervals.Add(New Interval(-15, 15))
+            Intervals.Add(New MonoObjectiveEOALib.Range(-15, 15))
         Next
 
         'TestGSA(N, D, Intervals)
@@ -71,7 +71,7 @@ Module Program
 
     End Sub
 
-    Private Sub TestGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+    Private Sub TestGSA(N As Integer, D As Integer, LUBounds As List(Of MonoObjectiveEOALib.Range))
 
         Optimizer = New GSA_Optimizer(N, D, LUBounds, 100, 5)
 
@@ -81,7 +81,7 @@ Module Program
 
     End Sub
 
-    Private Sub TestGWO(N As Integer, D As Integer, LUBounds As List(Of Interval))
+    Private Sub TestGWO(N As Integer, D As Integer, LUBounds As List(Of MonoObjectiveEOALib.Range))
 
         Optimizer = New GWO_Optimizer(N, D, LUBounds)
 
@@ -91,7 +91,7 @@ Module Program
 
     End Sub
 
-    Private Sub TestPSOGSA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+    Private Sub TestPSOGSA(N As Integer, D As Integer, LUBounds As List(Of MonoObjectiveEOALib.Range))
 
         Optimizer = New PSOGSA_Optimizer(N, D, LUBounds)
 
@@ -101,7 +101,7 @@ Module Program
 
     End Sub
 
-    Private Sub TestDBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+    Private Sub TestDBA(N As Integer, D As Integer, LUBounds As List(Of MonoObjectiveEOALib.Range))
 
         Optimizer = New DBA_Optimizer(N, D, LUBounds)
 
@@ -111,7 +111,7 @@ Module Program
 
     End Sub
 
-    Private Sub TestBA(N As Integer, D As Integer, LUBounds As List(Of Interval))
+    Private Sub TestBA(N As Integer, D As Integer, LUBounds As List(Of MonoObjectiveEOALib.Range))
 
         Optimizer = New BA_Optimizer(N, D, LUBounds)
 

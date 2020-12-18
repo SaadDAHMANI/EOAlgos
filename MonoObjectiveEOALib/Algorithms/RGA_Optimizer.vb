@@ -1,6 +1,23 @@
 ﻿Public Class RGA_Optimizer
     Inherits EvolutionaryAlgoBase
 
+    Public Sub New()
+    End Sub
+
+    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceRanges As List(Of Range))
+        PopulationSize_N = populationSize
+        Dimensions_D = searchSpaceDimension
+        SearchRanges = searchSpaceRanges
+        PopulationLimit = populationSize
+    End Sub
+
+    Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceRanges As List(Of Range), populationSizeLimit As Integer)
+        PopulationSize_N = populationSize
+        Dimensions_D = searchSpaceDimension
+        SearchRanges = searchSpaceRanges
+        PopulationLimit = populationSizeLimit
+    End Sub
+
     Public Overrides ReadOnly Property AlgorithmName As Object
         Get
             Throw New NotImplementedException()
@@ -13,27 +30,31 @@
         End Get
     End Property
 
+    Private _BestSolution As Double()
     Public Overrides ReadOnly Property BestSolution As Double()
         Get
-            Throw New NotImplementedException()
+            Return _BestSolution
         End Get
     End Property
 
+    Private _BestChart As List(Of Double)
     Public Overrides ReadOnly Property BestChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _BestChart
         End Get
     End Property
 
+    Private _WorstChart As List(Of Double)
     Public Overrides ReadOnly Property WorstChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _WorstChart
         End Get
     End Property
 
+    Private _MeanChart As List(Of Double)
     Public Overrides ReadOnly Property MeanChart As List(Of Double)
         Get
-            Throw New NotImplementedException()
+            Return _MeanChart
         End Get
     End Property
 
@@ -43,9 +64,10 @@
         End Get
     End Property
 
+    Private _CurrentBestFitness As Double
     Public Overrides ReadOnly Property CurrentBestFitness As Double
         Get
-            Throw New NotImplementedException()
+            Return _CurrentBestFitness
         End Get
     End Property
 #Region "Properties"
@@ -80,6 +102,8 @@
 #Region "Private_variables"
     Private CrossoverPoint As Integer
     Private MutationIndex As Integer
+    Private CurrentPopulationSize As Integer
+    Private N, D As Integer
 #End Region
 
     Public Overrides Sub RunEpoch()
@@ -87,7 +111,16 @@
     End Sub
 
     Public Overrides Sub InitializeOptimizer()
-        Throw New NotImplementedException()
+        N = PopulationSize_N - 1
+        D = Dimensions_D - 1
+        _BestSolution = New Double(D) {}
+        _BestChart = New List(Of Double)
+        _MeanChart = New List(Of Double)
+        _WorstChart = New List(Of Double)
+
+        CurrentPopulationSize = PopulationSize_N
+
+        InitializePopulation()
     End Sub
 
     Public Overrides Sub ComputeObjectiveFunction(positions() As Double, ByRef fitness_Value As Double)

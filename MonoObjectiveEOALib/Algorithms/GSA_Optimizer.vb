@@ -16,7 +16,7 @@ Public Class GSA_Optimizer
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range), Go As Double, alpha As Double)
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         G0 = Go
         Me.Alpha = alpha
 
@@ -85,13 +85,13 @@ Public Class GSA_Optimizer
         For i As Integer = 0 To N
 
             For j As Integer = 0 To D
-                If Population(i)(j) > SearchIntervals.Item(j).Max Then
+                If Population(i)(j) > SearchRanges.Item(j).Max Then
                     Tp(j) = 1I
                 Else
                     Tp(j) = 0I
                 End If
 
-                If Population(i)(j) < SearchIntervals.Item(j).Min Then
+                If Population(i)(j) < SearchRanges.Item(j).Min Then
                     Tm(j) = 1I
                 Else
                     Tm(j) = 0I
@@ -112,7 +112,7 @@ Public Class GSA_Optimizer
             Next
             '-----------------------------------
             For t = 0 To D
-                randiDimm(t) = (((SearchIntervals.Item(t).Max - SearchIntervals.Item(t).Min) * RandomGenerator.NextDouble()) + SearchIntervals.Item(t).Min) * (Tp(t) + Tm(t))
+                randiDimm(t) = (((SearchRanges.Item(t).Max - SearchRanges.Item(t).Min) * RandomGenerator.NextDouble()) + SearchRanges.Item(t).Min) * (Tp(t) + Tm(t))
 
             Next
 

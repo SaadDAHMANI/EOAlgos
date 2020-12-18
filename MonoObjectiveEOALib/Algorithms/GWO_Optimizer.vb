@@ -9,7 +9,7 @@ Public Class GWO_Optimizer
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range))
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         InitializePopulation()
     End Sub
 
@@ -215,13 +215,13 @@ Public Class GWO_Optimizer
                 ' des limites de la position qui sont autoris�s,
                 ' puis la valeur de retour afin de s'adapter � la limite
                 For j As Integer = 0 To Population(i).Length - 1
-                    If Population(i)(j) < SearchIntervals(j).Min Then
+                    If Population(i)(j) < SearchRanges(j).Min Then
                         'positionsList(i)(j) = (Intervalles(j).Max - Intervalles(j).Min) * Rndm.NextDouble() + Intervalles(j).Min
-                        Population(i)(j) = SearchIntervals(j).Min
+                        Population(i)(j) = SearchRanges(j).Min
 
-                    ElseIf Population(i)(j) > SearchIntervals(j).Max Then
+                    ElseIf Population(i)(j) > SearchRanges(j).Max Then
                         'Population(i)(j) = (Intervalles(j).Max - Intervalles(j).Min) * Rndm.NextDouble() + Intervalles(j).Min
-                        Population(i)(j) = SearchIntervals(j).Max
+                        Population(i)(j) = SearchRanges(j).Max
 
                     End If
                 Next j

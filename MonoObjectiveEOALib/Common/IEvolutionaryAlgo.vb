@@ -12,7 +12,7 @@
     ReadOnly Property AlgorithmFullName
 
     Property Population As Double()()
-    Property SearchIntervals As List(Of Range)
+    Property SearchRanges As List(Of Range)
     Property MaxIterations As Integer
     Property OptimizationType As OptimizationTypeEnum
 

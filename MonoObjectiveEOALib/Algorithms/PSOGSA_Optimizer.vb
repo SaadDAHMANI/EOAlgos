@@ -13,13 +13,13 @@ Public Class PSOGSA_Optimizer
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range))
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
     End Sub
 
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range), Go As Double, alphaG As Double, C_1 As Double, C_2 As Double)
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         G0 = Go
         Alpha = alphaG
         C1 = C_1
@@ -29,14 +29,14 @@ Public Class PSOGSA_Optimizer
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range), maxIterationsNbr As Integer)
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         MaxIterations = maxIterationsNbr
     End Sub
 
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range), maxIterationsNbr As Integer, Go As Double, alphaG As Double, C_1 As Double, C_2 As Double)
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         MaxIterations = maxIterationsNbr
         G0 = Go
         Alpha = alphaG
@@ -112,12 +112,12 @@ Public Class PSOGSA_Optimizer
         For i = 0 To N
             '' simple bounds/limits
             For j = 0 To D
-                If Population(i)(j) < SearchIntervals(j).Min Then
-                    Population(i)(j) = SearchIntervals(j).Min '(SearchIntervals(j).Max - SearchIntervals(j).Min) * RandomGenerator.NextDouble() + SearchIntervals(j).Min
+                If Population(i)(j) < SearchRanges(j).Min Then
+                    Population(i)(j) = SearchRanges(j).Min '(SearchRanges(j).Max - SearchRanges(j).Min) * RandomGenerator.NextDouble() + SearchRanges(j).Min
                 End If
 
-                If Population(i)(j) > SearchIntervals(j).Max Then
-                    Population(i)(j) = SearchIntervals(j).Max '(SearchIntervals(j).Max - SearchIntervals(j).Min) * RandomGenerator.NextDouble() + SearchIntervals(j).Min
+                If Population(i)(j) > SearchRanges(j).Max Then
+                    Population(i)(j) = SearchRanges(j).Max '(SearchRanges(j).Max - SearchRanges(j).Min) * RandomGenerator.NextDouble() + SearchRanges(j).Min
                 End If
             Next
 
@@ -241,7 +241,7 @@ Public Class PSOGSA_Optimizer
 
 #End Region
     Public Overrides Sub InitializeOptimizer()
-        If SearchIntervals.Count < Dimensions_D Then Throw New Exception("Search space intervals must be equal search space dimension.")
+        If SearchRanges.Count < Dimensions_D Then Throw New Exception("Search space intervals must be equal search space dimension.")
 
         _BestChart = New List(Of Double)
         _MeanChart = New List(Of Double)
@@ -311,13 +311,13 @@ Public Class PSOGSA_Optimizer
         For i As Integer = 0 To Me.N
 
             For j As Integer = 0 To Me.D
-                If X(i)(j) > SearchIntervals.Item(j).Max Then
+                If X(i)(j) > SearchRanges.Item(j).Max Then
                     Tp(j) = 1I
                 Else
                     Tp(j) = 0I
                 End If
 
-                If X(i)(j) < SearchIntervals.Item(j).Min Then
+                If X(i)(j) < SearchRanges.Item(j).Min Then
                     Tm(j) = 1I
 
                 Else
@@ -339,7 +339,7 @@ Public Class PSOGSA_Optimizer
             Next
             '-----------------------------------
             For t = 0 To Me.D
-                randiDimm(t) = (RandomGenerator.NextDouble() * (SearchIntervals.Item(t).Max - SearchIntervals.Item(t).Min) + SearchIntervals.Item(t).Min) * (Tp(t) + Tm(t))
+                randiDimm(t) = (RandomGenerator.NextDouble() * (SearchRanges.Item(t).Max - SearchRanges.Item(t).Min) + SearchRanges.Item(t).Min) * (Tp(t) + Tm(t))
             Next
 
             For t = 0 To Me.D

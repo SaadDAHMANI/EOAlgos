@@ -14,7 +14,7 @@ Public MustInherit Class EvolutionaryAlgoBase
     Public Sub New(populationSize As Integer, searchSpaceDimension As Integer, searchSpaceIntervals As List(Of Range))
         PopulationSize_N = populationSize
         Dimensions_D = searchSpaceDimension
-        SearchIntervals = searchSpaceIntervals
+        SearchRanges = searchSpaceIntervals
         'InitializePopulation()
     End Sub
     Public Sub New()
@@ -42,7 +42,7 @@ Public MustInherit Class EvolutionaryAlgoBase
     ''' Search space intervals.
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable Property SearchIntervals As List(Of Range) Implements IEvolutionaryAlgo.SearchIntervals
+    Public Overridable Property SearchRanges As List(Of Range) Implements IEvolutionaryAlgo.SearchRanges
         Get
             Return Intervals
         End Get
